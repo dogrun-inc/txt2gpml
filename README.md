@@ -1,2 +1,2 @@
-# df2gpml
-Generate xml file from python dataframe format data using GPML2021.xsd
+# txt2gpml
+Generate GPM from node, edge, and anchor data in text file format.
