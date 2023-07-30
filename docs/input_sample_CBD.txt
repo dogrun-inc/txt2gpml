@@ -1,5 +1,4 @@
-# node, edgge, anchorにそれぞれIDを振る案（CBDを例にした場合）
-# nodes list
+# nodes　以下node, edgge, anchorをブロックごとにわけて記述しそれぞれIDを振る案（CBDを例にした場合）
 Label BiologicalType  ID
 hexanoyl-CoA    Metabolite  001
 olivetolic acid    Metabolite    002
@@ -18,7 +17,7 @@ Malonyl-CoA Metabolite  014
 Cannabidiolic acid synthase (CBDAS) Protein 015
 Tetrahydrocannabinolic acid synthase (THCAS)    Protein 016
 
-# edge
+# edges
 node1   node2   BiologicalType  ID
 001 002 Arrow   e001
 002 003 Line    e002
@@ -28,7 +27,7 @@ node1   node2   BiologicalType  ID
 007 008 mim-conversion  e006
 
 
-# anchor
+# anchors
 node    interaction    BiologicalType  ID
 011 e001    mim-catalysis   a001
 012 e001    mim-catalysis   a002
