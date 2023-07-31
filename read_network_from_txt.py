@@ -9,21 +9,6 @@ def read_text(f:str):
     return lines
     
 
-def main(f:str):
-    """_summary_
-    0. The source is a tab-delimited file in which nodes, edges, 
-    and anchors are described block by block, and the comment line 
-    on the first line of each block begins with nodes, edges, and anchors.
-    1. Read tab-delimited file describing nodes, edges, and anchors.
-    2. Parses rows for each block and converts to a list or dict.
-    3. Returns a list of dicts for each block.
-    """
-    rows = [r.rstrip() for r in read_text(f)]
-    # append blank line to the end of the list
-    rows.append("")
-    print(get_blcoks(rows))
-
-
 def get_blcoks(rows:list):
     """_summray_
     Finding the position of a block in a list from converted nodes, edges, and anchors
@@ -48,14 +33,33 @@ def get_blcoks(rows:list):
     return nodes, edges, anchors
 
 
-def convert2nodelist():
-    pass
+def list2dict(lst:list):
+    """_summary_
+    split strings
+    """
+    lst_splt = [x.split() for x in lst]
+    return [dict(zip(lst_splt[0], v)) for v in lst_splt[1:]]
 
-def convert2edgelist():
-    pass
 
-def convert2anchorlist():
-    pass
+def main(f:str):
+    """_summary_
+    0. The source is a tab-delimited file in which nodes, edges, 
+    and anchors are described block by block, and the comment line 
+    on the first line of each block begins with nodes, edges, and anchors.
+    1. Read tab-delimited file describing nodes, edges, and anchors.
+    2. Parses rows for each block and converts to a list or dict.
+    3. Returns a list of dicts for each block.
+    4. convert to node list, edge list, anchor list to each dict.
+    """
+    rows = [r.rstrip() for r in read_text(f)]
+    # append blank line to the end of the list
+    rows.append("")
+    node_list, edge_list, anchor_list = get_blcoks(rows)
+    nodes = list2dict(node_list)
+    edges = list2dict(edge_list)
+    anchors = list2dict(anchor_list)
+    return nodes, edges, anchors
+
 
 if __name__ == '__main__':
     main("docs/input_sample_CBD.txt")
