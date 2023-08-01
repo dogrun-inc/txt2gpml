@@ -1,5 +1,5 @@
 # txt2gpml
-A tools to generate readable XML (GPML) for [WikiPathways https://www.wikipathways.org/](https://www.wikipathways.org/) from node and interaction data described in text files.
+A tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathways.org/)](https://www.wikipathways.org/) from node and interaction data described in text files.
 
 ## Input file format
 
