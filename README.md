@@ -1,6 +1,5 @@
 # txt2gpml
-Generate GPM from node, edge, and anchor data in text file format.
-
+A tools to generate readable XML (GPML) for WikiPathways from node and interaction data described in text files.
 
 ## Input file format
 
