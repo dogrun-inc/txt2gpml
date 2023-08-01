@@ -58,7 +58,8 @@ def main(f:str):
     nodes = list2dict(node_list)
     edges = list2dict(edge_list)
     anchors = list2dict(anchor_list)
-    return nodes, edges, anchors
+    pathway_dict = {"nodes":nodes, "edges":edges, "anchors":anchors}
+    return pathway_dict
 
 
 if __name__ == '__main__':
