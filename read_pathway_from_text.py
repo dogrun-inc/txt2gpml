@@ -3,6 +3,7 @@ import os
 import sys
 import csv
 
+
 def read_text(f:str):
     with open(f, 'r') as f:
         lines = f.readlines()
@@ -63,5 +64,4 @@ def main(f:str):
 
 
 if __name__ == '__main__':
-    main("docs/input_sample_CBD.txt")
-    
+    dct = main("docs/input_sample_CBD.txt")
