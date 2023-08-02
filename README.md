@@ -1,9 +1,9 @@
 # txt2gpml
-Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathways.org/)](https://www.wikipathways.org/) from nodes and interactions data described in text file.
+Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathways.org/)](https://www.wikipathways.org/) from nodes and interactions data described in csv file.
 
 ## Input file format
 
-- Tab-delimited description of nodes, edges, and anchors for each block.
+- comma-separated data of nodes, edges, and anchors for each block.
 - If each block is preceded by a comment describing the type, for example, a line beginning with "# node", it is treated as a block describing a node up to the following empty line.
 - The first line of each block describes the header. The headers are converted to dictionary keys after the file is read.
 - NODE records always specify an ID.
