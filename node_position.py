@@ -1,4 +1,5 @@
 import networkx as nx
+from networkx.drawing.nx_agraph import graphviz_layout
 import read_pathway_from_text as rft
 from matplotlib import pyplot as plt
 
@@ -15,10 +16,13 @@ def create_psudo_edges(d:dict) -> dict:
     ps_edges = []
     for a in d["anchors"]:
         edge_id = a["interaction"]
-        # fetch dcit with matching edge_id
+        # fetch elements with matching edge_id
         interaction = next((item for item in d["edges"] if item['ID'] == edge_id), None)
-        ps_edges.append({"node1": interaction["node1"], "node2": interaction["node2"]})
-    # Todo: 既存のedgesにps_edgesを追加する（仮のedgeであり、IDはつけない）
+        # Todo:anchorsのノード要素にinteractionのノード要素を連結する二つのedgeを作成を追加する
+        ps_edges.extend([{"node1": interaction["node1"],
+                          "node2": a["node"]},{"node1":a["node"], "node2": interaction["node2"]}])
+
+    # 既存のedgesにps_edgesを追加する（仮のedgeであり、IDはつけない）
     d["edges"].extend(ps_edges)
     return d
 
@@ -52,7 +56,10 @@ def main(d:dict) -> dict:
     # create network
     G = create_graph(psudo_graph)
     # get x,y positions of nodes
-    pos = nx.spring_layout(G)
+    # 階層的レイアウト(dot)がPatywayのイメージに最もマッチするとおもわれる。その他circo,sfdpなども良いかもしれない
+    pos = graphviz_layout(G, prog='circo')
+    # 基本だがPathwayを表している感じがあまりしない
+    # pos = nx.spring_layout(G, k=1, seed=10)
     nx.draw(G, pos, with_labels=True)
     plt.show()
     return pos

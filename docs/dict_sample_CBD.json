@@ -1,0 +1,208 @@
+{
+    "nodes": [
+        {
+            "Label": "hexanoyl-CoA",
+            "BiologicalType": "Metabolite",
+            "ID": "001"
+        },
+        {
+            "Label": "olivetolic acid",
+            "BiologicalType": "Metabolite",
+            "ID": "002"
+        },
+        {
+            "Label": "Geranylneryl diphosphate",
+            "BiologicalType": "Metabolite",
+            "ID": "003"
+        },
+        {
+            "Label": "cannabigerolic acid (CBGA)",
+            "BiologicalType": "Metabolite",
+            "ID": "004"
+        },
+        {
+            "Label": "Cannabidiolic acid (CBDA)",
+            "BiologicalType": "Metabolite",
+            "ID": "005"
+        },
+        {
+            "Label": "Cannabidiol (CBD)",
+            "BiologicalType": "Metabolite",
+            "ID": "006"
+        },
+        {
+            "Label": "delta(9)-Tetrahydrocannabinolic acid (D9-THCA)",
+            "BiologicalType": "Metabolite",
+            "ID": "007"
+        },
+        {
+            "Label": "Delta(9)-tetrahydrocannabinol (D9-THC)",
+            "BiologicalType": "Metabolite",
+            "ID": "008"
+        },
+        {
+            "Label": "[CO2]",
+            "BiologicalType": "Metabolite",
+            "ID": "009"
+        },
+        {
+            "Label": "[CO2]",
+            "BiologicalType": "Metabolite",
+            "ID": "010"
+        },
+        {
+            "Label": "Olivetol synthase",
+            "BiologicalType": "Protein",
+            "ID": "011"
+        },
+        {
+            "Label": "Olivetolic acid cyclase",
+            "BiologicalType": "Protein",
+            "ID": "012"
+        },
+        {
+            "Label": "Cannabigerolic acid synthase",
+            "BiologicalType": "Protein",
+            "ID": "013"
+        },
+        {
+            "Label": "Malonyl-CoA",
+            "BiologicalType": "Metabolite",
+            "ID": "014"
+        },
+        {
+            "Label": "Cannabidiolic acid synthase (CBDAS)",
+            "BiologicalType": "Protein",
+            "ID": "015"
+        },
+        {
+            "Label": "Tetrahydrocannabinolic acid synthase (THCAS)",
+            "BiologicalType": "Protein",
+            "ID": "016"
+        }
+    ],
+    "edges": [
+        {
+            "node1": "001",
+            "node2": "002",
+            "BiologicalType": "Arrow",
+            "ID": "e001"
+        },
+        {
+            "node1": "002",
+            "node2": "003",
+            "BiologicalType": "Line",
+            "ID": "e002"
+        },
+        {
+            "node1": "004",
+            "node2": "005",
+            "BiologicalType": "mim-conversion",
+            "ID": "e003"
+        },
+        {
+            "node1": "004",
+            "node2": "007",
+            "BiologicalType": "mim-conversion",
+            "ID": "e004"
+        },
+        {
+            "node1": "005",
+            "node2": "006",
+            "BiologicalType": "mim-conversion",
+            "ID": "e005"
+        },
+        {
+            "node1": "007",
+            "node2": "008",
+            "BiologicalType": "mim-conversion",
+            "ID": "e006"
+        },
+        {
+            "node1": "001",
+            "node2": "011"
+        },
+        {
+            "node1": "011",
+            "node2": "002"
+        },
+        {
+            "node1": "001",
+            "node2": "012"
+        },
+        {
+            "node1": "012",
+            "node2": "002"
+        },
+        {
+            "node1": "004",
+            "node2": "015"
+        },
+        {
+            "node1": "015",
+            "node2": "005"
+        },
+        {
+            "node1": "004",
+            "node2": "016"
+        },
+        {
+            "node1": "016",
+            "node2": "007"
+        },
+        {
+            "node1": "007",
+            "node2": "009"
+        },
+        {
+            "node1": "009",
+            "node2": "008"
+        },
+        {
+            "node1": "005",
+            "node2": "010"
+        },
+        {
+            "node1": "010",
+            "node2": "006"
+        }
+    ],
+    "anchors": [
+        {
+            "node": "011",
+            "interaction": "e001",
+            "BiologicalType": "mim-catalysis",
+            "ID": "a001"
+        },
+        {
+            "node": "012",
+            "interaction": "e001",
+            "BiologicalType": "mim-catalysis",
+            "ID": "a002"
+        },
+        {
+            "node": "015",
+            "interaction": "e003",
+            "BiologicalType": "mim-catalysis",
+            "ID": "a003"
+        },
+        {
+            "node": "016",
+            "interaction": "e004",
+            "BiologicalType": "mim-catalysis",
+            "ID": "a004"
+        },
+        {
+            "node": "009",
+            "interaction": "e006",
+            "BiologicalType": "mim-conversion",
+            "ID": "a005"
+        },
+        {
+            "node": "010",
+            "interaction": "e005",
+            "BiologicalType": "mim-conversion",
+            "ID": "a006"
+        }
+    ]
+}

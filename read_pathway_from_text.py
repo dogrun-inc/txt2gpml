@@ -38,7 +38,7 @@ def list2dict(lst:list):
     """_summary_
     split strings
     """
-    lst_splt = [x.split() for x in lst]
+    lst_splt = [x.split(',') for x in lst]
     return [dict(zip(lst_splt[0], v)) for v in lst_splt[1:]]
 
 

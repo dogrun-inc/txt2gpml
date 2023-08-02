@@ -1,37 +1,37 @@
 # nodes　以下node, edgge, anchorをブロックごとにわけて記述しそれぞれIDを振る案（CBDを例にした場合）
-Label BiologicalType  ID
-hexanoyl-CoA    Metabolite  001
-olivetolic acid    Metabolite    002
-Geranylneryl diphosphate    Metabolite  003
-cannabigerolic acid (CBGA)    Metabolite    004
-Cannabidiolic acid (CBDA)    Metabolite 005
-Cannabidiol (CBD)    Metabolite 006
-delta(9)-Tetrahydrocannabinolic acid (D9-THCA)  Metabolite  007
-Delta(9)-tetrahydrocannabinol (D9-THC)  Metabolite  008
-[CO2]   Metabolite  009
-[CO2]   Metabolite  010
-Olivetol synthase   Protein 011
-Olivetolic acid cyclase Protein 012
-Cannabigerolic acid synthase    Protein 013
-Malonyl-CoA Metabolite  014
-Cannabidiolic acid synthase (CBDAS) Protein 015
-Tetrahydrocannabinolic acid synthase (THCAS)    Protein 016
+Label,BiologicalType,ID
+hexanoyl-CoA,Metabolite,001
+olivetolic acid,Metabolite,002
+Geranylneryl diphosphate,Metabolite,003
+cannabigerolic acid (CBGA),Metabolite,004
+Cannabidiolic acid (CBDA),Metabolite,005
+Cannabidiol (CBD),Metabolite,006
+delta(9)-Tetrahydrocannabinolic acid (D9-THCA),Metabolite,007
+Delta(9)-tetrahydrocannabinol (D9-THC),Metabolite,008
+[CO2],Metabolite,009
+[CO2],Metabolite,010
+Olivetol synthase,Protein,011
+Olivetolic acid cyclase,Protein,012
+Cannabigerolic acid synthase,Protein,013
+Malonyl-CoA,Metabolite,014
+Cannabidiolic acid synthase (CBDAS),Protein,015
+Tetrahydrocannabinolic acid synthase (THCAS),Protein,016
 
 # edges
-node1   node2   BiologicalType  ID
-001 002 Arrow   e001
-002 003 Line    e002
-004 005 mim-conversion  e003
-004 007 mim-conversion  e004
-005 006 mim-conversion  e005
-007 008 mim-conversion  e006
+node1,node2,BiologicalType,ID
+001,002,Arrow,e001
+002,003,Line,e002
+004,005,mim-conversion,e003
+004,007,mim-conversion,e004
+005,006,mim-conversion,e005
+007,008,mim-conversion,e006
 
 
 # anchors
-node    interaction    BiologicalType  ID
-011 e001    mim-catalysis   a001
-012 e001    mim-catalysis   a002
-015 e003    mim-catalysis   a003
-016 e004    mim-catalysis   a004
-009 e006    mim-conversion  a005
-010 e005    mim-conversion  a006
+node,interaction,BiologicalType,ID
+011,e001,mim-catalysis,a001
+012,e001,mim-catalysis,a002
+015,e003,mim-catalysis,a003
+016,e004,mim-catalysis,a004
+009,e006,mim-conversion,a005
+010,e005,mim-conversion,a006
