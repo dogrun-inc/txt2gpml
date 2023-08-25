@@ -3,14 +3,44 @@ from networkx.drawing.nx_agraph import graphviz_layout
 import read_pathway_from_text as rft
 from matplotlib import pyplot as plt
 
-def create_psudo_edges(d:dict) -> dict:
+def create_psudo_network(d:dict) -> dict:
     """_summary_
-    Convert anchor of pathway to psudo-edges
+    Convert anchor of pathway to psudo-nodes and psudo-edges
     Args:
         d (dict): Pathway data
     Returns:
-        dict: アンカーをインタラクション両端のノードに連結した擬似的グラフ
+        dict: network data (node list, edgelist) with psudo-nodes and psudo-edges
     """
+    # Todo: anchorにedgeが接続するケースを考慮する（CBDの例ではnode ID 13のケース）
+    # Todo: anchorを擬似的なnodeとして追加する方向で考える
+    # i) 一つのanchorに対して一つのnodeを追加する
+    # ii) i)で追加したノードとanchorのノードを連結した仮想的なedgeを追加する
+    # iii) anchorとinteractionのstart,
+    ps_nodes = []
+    ps_edges = []
+    for a in d["anchors"]:
+        ps_node_id = "a" + a["interaction"]
+        ps_nodes.append({"ID": ps_node_id})
+        interaction = next((item for item in d["edges"] if item['ID'] == a["interaction"]), None)
+        if interaction is None:
+            # Todo: nodeがedgeでは無くanchorにinteractionする場合、
+            # 再起的にedgeの両端のノードをたたどって、そのノードとの仮想的なedgeを追加する
+            interaction_to_anchor = next((item for item in d["anchors"] if item['interaction'] == a["interaction"]), None)
+            if interaction_to_anchor is None:
+                pass
+            else:
+                ps_edges.append({"node1": interaction_to_anchor["node"], "node2": ps_node_id})
+                ps_edges.append({"node1": ps_node_id, "node2": a["node"]})
+        else:
+            ps_edges.append({"node1": interaction["node1"],"node2":ps_node_id})
+            ps_edges.append({"node1": ps_node_id, "node2": interaction["node2"]})
+            ps_edges.append({"node1": ps_node_id, "node2": a["node"]})
+
+    d["nodes"].extend(ps_nodes)
+    d["edges"].extend(ps_edges)
+    return d
+    
+    # 以下一回そうのanchorに対してしか対応できないため、一旦保留
     # anchorsのinteractionをキーにedgesからnode1,node2の二つのノードを取得し
     # anchor１レコードから二つの擬似的なedgeを作成する
     ps_edges = []
@@ -52,12 +82,12 @@ def main(d:dict) -> dict:
         dict: x,y positions of nodes ex. {'001': array([-0.32849682,  0.86052563]),,}
     """
     # convert anchors to psudo-edges
-    psudo_graph = create_psudo_edges(d)
+    psudo_graph = create_psudo_network(d)
     # create network
     G = create_graph(psudo_graph)
     # get x,y positions of nodes
-    # 階層的レイアウト(dot)がPatywayのイメージに最もマッチするとおもわれる。その他circo,sfdpなども良いかもしれない
-    pos = graphviz_layout(G, prog='circo')
+    # 階層的レイアウト(dot)がPatywayのイメージに最もマッチするとおもわれる。その他circo,fdpなども良いかもしれない
+    pos = graphviz_layout(G, prog='dot')
     # 基本だがPathwayを表している感じがあまりしない
     # pos = nx.spring_layout(G, k=1, seed=10)
     nx.draw(G, pos, with_labels=True)

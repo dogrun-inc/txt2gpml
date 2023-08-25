@@ -1,3 +1,6 @@
+# 013(Cannabigerolic acid synthase)はInteractionのInteractionにanchorが連結するが、
+# Todo: 正しくないので改正する（ボジションは妥当な感じになるが...）> この場合最初のInteractionをanchorリストでは記述していることに留意してほしい
+# anchorもinteractionで指定できるようにする（Todo:再帰処理実装）
 # nodes　以下node, edgge, anchorをブロックごとにわけて記述しそれぞれIDを振る案（CBDを例にした場合）
 Label,BiologicalType,ID
 hexanoyl-CoA,Metabolite,001
@@ -26,7 +29,6 @@ node1,node2,BiologicalType,ID
 005,006,mim-conversion,e005
 007,008,mim-conversion,e006
 
-
 # anchors
 node,interaction,BiologicalType,ID
 011,e001,mim-catalysis,a001
@@ -35,3 +37,5 @@ node,interaction,BiologicalType,ID
 016,e004,mim-catalysis,a004
 009,e006,mim-conversion,a005
 010,e005,mim-conversion,a006
+004,e002,mim-conversion,a007
+013,a007,mim-conversion,a008
