@@ -1,3 +1,8 @@
+### root
+# organism, nameが必要！！
+name, organism
+CBD synthetic pathway, Arabidopsis thaliana
+
 # 013(Cannabigerolic acid synthase)はInteractionのInteractionにanchorが連結するが、
 # Todo: 正しくないので改正する（ボジションは妥当な感じになるが...）> この場合最初のInteractionをanchorリストでは記述していることに留意してほしい
 # anchorもinteractionで指定できるようにする（Todo:再帰処理実装）

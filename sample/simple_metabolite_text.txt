@@ -1,0 +1,11 @@
+# root
+name, organism
+
+# nodes
+Label,BiologicalType,ID
+
+# edges
+node1,node2,BiologicalType,ID
+
+# anchors
+node,interaction,BiologicalType,ID

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="test data" Organism="test org">
+    <Graphics BoardWidth="735.0" BoardHeight="446.5" />
+    <DataNode>
+        <Graphics CenterX="565.5" CenterY="295.0" Width="213.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" />
+        <Xref Database="" ID="" />
+    </DataNode>
+</Pathway>
