@@ -1,6 +1,6 @@
 import xmlschema
 import json
-from xml.etree.ElementTree import ElementTree as ET
+import xml.etree.ElementTree as ET
 
 
 xsd_path = './sample/GPML2021.xsd'
@@ -19,7 +19,7 @@ def simle_schema_test():
     jsn_txt = json.dumps({'note': 'this is a Note text','comment': 'this is a Comment text'})
     #xmldata = xmlschema.from_json(jsn_txt, schema=schema, preserve_root=True, namespaces={"": "urn:oasis:names:tc:emergency:cap:1.2"})
     xmldata = xmlschema.from_json(jsn_txt, schema=schema, preserve_root=True)
-    ET(xmldata).write('./sample/test_test2.xml')
+    ET.ElementTree(xmldata).write('./sample/test_test2.xml')
 
 
 def most_simple_schema_test():
@@ -34,7 +34,7 @@ def most_simple_schema_test():
     #schema = xmlschema.XMLSchema(my_xsd)
     data = json.dumps({'note': 'this is a Note text'})
     xml = xmlschema.from_json(data, schema=schema, preserve_root=True)
-    ET(xml).write('./sample/simple_test.xml')
+    ET.ElementTree(xml).write('./sample/simple_test.xml')
 
 def main(jsondata):
     """
@@ -42,7 +42,7 @@ def main(jsondata):
     """
     jsn = json.dumps(jsondata, indent=4)
     xml = xmlschema.from_json(jsn, xmlschema=gpml2021schema)
-    ET(xml).write('test.xml', encoding='utf-8', xml_declaration=True)
+    ET.ElementTree(xml).write('test.xml', encoding='utf-8', xml_declaration=True)
 
 
 if __name__ == '__main__':
