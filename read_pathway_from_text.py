@@ -2,7 +2,7 @@
 import os
 import sys
 import csv
-
+import node_position
 
 def read_text(f:str):
     with open(f, 'r') as f:
@@ -18,6 +18,8 @@ def get_blcoks(rows:list):
     3. find the position of the block from the position of 1 and 2
     return: parts of list
     """
+    # Todo: root データの取得を追加する
+
     # 1. find the position (index) of nodes, edges, anchors
     start_nodes = [i for i, r in enumerate(rows) if r.startswith("# nodes")]
     start_edges = [i for i, r in enumerate(rows) if r.startswith("# edges")]
@@ -55,13 +57,23 @@ def main(f:str):
     rows = [r.rstrip() for r in read_text(f)]
     # append blank line to the end of the list
     rows.append("")
+    # Todo: root属性の取得スクリプトをget_blocksに追加する
+    #root_props, node_list, edge_list, anchor_list = get_blcoks(rows)
     node_list, edge_list, anchor_list = get_blcoks(rows)
     nodes = list2dict(node_list)
     edges = list2dict(edge_list)
     anchors = list2dict(anchor_list)
-    pathway_dict = {"nodes":nodes, "edges":edges, "anchors":anchors}
+    # Todo: 座標要素（node, anchor）を追加する
+    # Todo: interactionの座標はnodeの座標と微妙に異なるので、それを踏まえinteractionのpositionを計算する
+    # Interactionのstart-endの座標セットとして計算する
+    #positions = node_position.main(nodes, edges)
+    positions = {}
+    # pathway_dict = {"root":root_props, "nodes":nodes, "edges":edges, "anchors":anchors, "poisitons":positions}
+    pathway_dict = {"nodes":nodes, "edges":edges, "anchors":anchors, "poisitons":positions}
+    print(pathway_dict)
     return pathway_dict
 
 
 if __name__ == '__main__':
-    dct = main("docs/input_sample_CBD.txt")
+    dct = main("sample/simple_metabolite_text.txt")
+    #print(dct)

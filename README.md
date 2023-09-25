@@ -9,6 +9,7 @@ Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathway
 - NODE records always specify an ID.
 - The edge describes the start node and target node, each with a node ID.
 - The anchor describes the node and interaction, and is described as edge ID and node ID, respectively.
+- ノード、インタラクション, アンカーにはIDをつけるが、a-fのアルファベットを頭文字にした5桁もしくは8桁のIDをつける
 
 ## Reading files and converting to dict: read_pathway_from_text
 

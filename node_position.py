@@ -1,7 +1,7 @@
 import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout
-import read_pathway_from_text as rft
 from matplotlib import pyplot as plt
+import read_pathway_from_text as rpft
 
 def create_psudo_network(d:dict) -> dict:
     """_summary_
@@ -40,7 +40,7 @@ def create_psudo_network(d:dict) -> dict:
     d["edges"].extend(ps_edges)
     return d
     
-    # 以下一回そうのanchorに対してしか対応できないため、一旦保留
+    # 以下、一階層に対してしか対応できないため、一旦保留
     # anchorsのinteractionをキーにedgesからnode1,node2の二つのノードを取得し
     # anchor１レコードから二つの擬似的なedgeを作成する
     ps_edges = []
@@ -79,8 +79,11 @@ def main(d:dict) -> dict:
     Args:
         d: {nodes:[], edges:[], anchors:[]}
     Returns: 
-        dict: x,y positions of nodes ex. {'001': array([-0.32849682,  0.86052563]),,}
+        dict: x,y positions of nodes ex. {'n001': (103.6, 162.0), 'n002': (178.6, 162.0), 'n003': (28.597, 162.0),
+          'ai001': (44.597, 90.0), 'noo2': (73.597, 18.0)}
     """
+
+
     # convert anchors to psudo-edges
     psudo_graph = create_psudo_network(d)
     # create network
@@ -88,11 +91,15 @@ def main(d:dict) -> dict:
     # get x,y positions of nodes
     # 階層的レイアウト(dot)がPatywayのイメージに最もマッチするとおもわれる。その他circo,fdpなども良いかもしれない
     pos = graphviz_layout(G, prog='dot')
+
+    # Todo: interactionのstart-endのx,y座標セットも計算して返す
+
     # 基本だがPathwayを表している感じがあまりしない
     # pos = nx.spring_layout(G, k=1, seed=10)
     nx.draw(G, pos, with_labels=True)
     plt.show()
     return pos
 
+
 if __name__ == '__main__':
-    main(rft.main("docs/input_sample_CBD.txt"))
+    main(rpft.main("docs/input_sample_CBD.txt"))

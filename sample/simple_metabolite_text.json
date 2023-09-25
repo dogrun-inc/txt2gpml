@@ -1,0 +1,36 @@
+{
+    "nodes": [
+        {
+            "Label": "Metabolite1",
+            "BiologicalType": "Metabolite",
+            "ID": "n001"
+        },
+        {
+            "Label": "Metabolite2",
+            "BiologicalType": "Metabolite",
+            "ID": "n002"
+        },
+        {
+            "Label": "GeneProduct1",
+            "BiologicalType": "GeneProduct",
+            "ID": "n003"
+        }
+    ],
+    "edges": [
+        {
+            "node1": "n001",
+            "node2": "noo2",
+            "BiologicalType": "Arrow",
+            "ID": "i001"
+        }
+    ],
+    "anchors": [
+        {
+            "node": "n003",
+            "interaction": "i001",
+            "BiologicalType": "mim-catalysis",
+            "ID": "a001"
+        }
+    ],
+    "poisitons": {}
+}

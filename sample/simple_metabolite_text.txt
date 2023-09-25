@@ -1,11 +1,17 @@
 # root
 name, organism
+simple pathway, Canis familiaris
 
 # nodes
 Label,BiologicalType,ID
+Metabolite1,Metabolite,n001
+Metabolite2,Metabolite,n002
+GeneProduct1,GeneProduct,n003
 
 # edges
 node1,node2,BiologicalType,ID
+n001,n002,Arrow,i001
 
 # anchors
 node,interaction,BiologicalType,ID
+n003,i001,mim-catalysis,a001
