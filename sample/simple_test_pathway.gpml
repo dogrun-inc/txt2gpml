@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="simple_pathway" Version="20230907" Organism="Canis familiaris">
+  <Graphics BoardWidth="504.0" BoardHeight="245.5" />
+  <DataNode TextLabel="Metabolite1" GraphId="c436b" Type="Metabolite">
+    <Graphics CenterX="288.0" CenterY="130.0" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="GeneProduct" GraphId="da8ce" Type="GeneProduct">
+    <Graphics CenterX="389.0" CenterY="161.0" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="Metabolkte2" GraphId="ec86a" Type="Metabolite">
+    <Graphics CenterX="288.0" CenterY="203.0" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction>
+    <Graphics ZOrder="12288" LineThickness="1.0">
+      <Point X="344.0" Y="161.0" GraphRef="da8ce" RelX="-1.0" RelY="0.0" />
+      <Point X="288.0" Y="161.7" GraphRef="ede34" RelX="0.0" RelY="0.0" ArrowHead="mim-catalysis" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="idbfcea4ca">
+    <Graphics ConnectorType="Segmented" ZOrder="12288" LineThickness="1.0">
+      <Point X="288.0" Y="142.5" GraphRef="c436b" RelX="0.0" RelY="1.0" />
+      <Point X="288.0" Y="190.5" GraphRef="ec86a" RelX="0.0" RelY="-1.0" ArrowHead="Arrow" />
+      <Anchor Position="0.4" Shape="None" GraphId="ede34" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax />
+</Pathway>
+
