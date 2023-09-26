@@ -9,9 +9,10 @@ Metabolite2,Metabolite,n0002
 GeneProduct1,GeneProduct,n0003
 
 # interaction
-start_point,end_point,BiologicalType,ID,anchor
-n0001,n0002,Arrow,i0001,false
+start_point,end_point,BiologicalType,ID
+n0001,n0002,Arrow,i0001
+n0003,a0001,mim-catalysis,i0002
 
 # anchors
-node,interaction,BiologicalType, position, ID
-n0003,i0001,mim-catalysis,0.5,a0001
+interaction, position, ID
+i0001,0.5,a0001
