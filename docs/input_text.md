@@ -1,21 +1,18 @@
-# input text案
+# ソースファイル案
+# pathway
+Name, Organism, 
+simple_pathway, Canis familiaris 
 
-## node list
-```
-label   biologicalType id
-cannabigerolic acid (CBGA)  Metabolite  001
-Cannabidiolic acid (CBDA)   Metabolite 002
-Cannabidiolic acid synthase (CBDAS) Protein 003
-```
+# node list
+label, biologicalType, id
+cannabigerolic acid (CBGA)  Metabolite  n0001
 
-## edge list (node listのidでnodesを指定する)
-```
-node1   node2   biologicaltype
-001 002 mim-conversion
-```
+# edge list
 
-## anchor list　（node listのidのセットでnode-anchorを指定する）
-```
-node    interaction biologicaltype
-003 [001,002]   mim-catalysis
-```
+start_point,end_point ,biologicaltype
+n0001, n0002, mim-conversion
+
+
+# anchor list
+id, interaction, biologicaltype, position
+a0001, i0001, amim-catalysis, 0.5

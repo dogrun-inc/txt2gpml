@@ -1,7 +1,9 @@
 import networkx as nx
+from typing import Tuple
 from networkx.drawing.nx_agraph import graphviz_layout
 from matplotlib import pyplot as plt
 import read_pathway_from_text as rpft
+
 
 def create_psudo_network(d:dict) -> dict:
     """_summary_
@@ -16,32 +18,46 @@ def create_psudo_network(d:dict) -> dict:
     # i) 一つのanchorに対して一つのnodeを追加する
     # ii) i)で追加したノードとanchorのノードを連結した仮想的なedgeを追加する
     # iii) anchorとinteractionのstart,
+
+    #
+    # Todo: anchorに座標が必要
+    # Interactionがnode-anchorの場合（anchor=true）は、レイアウト用のedgeに読み込まないようにする
+    # node-anchorのInteractionの場合のnodeの座標も必要で、anchorの座標とのnodeのCenterXYから計算する
+    #    
+    print(d)
     ps_nodes = []
     ps_edges = []
     for a in d["anchors"]:
+        # 仮想ノード を追加
         ps_node_id = "a" + a["interaction"]
         ps_nodes.append({"ID": ps_node_id})
-        interaction = next((item for item in d["edges"] if item['ID'] == a["interaction"]), None)
+
+        print("a:", a)
+        print(d["anchors"])
+        #
+        interaction = next((item for item in d["interactions"] if item['ID'] == a["interaction"]), None)
         if interaction is None:
             # Todo: nodeがedgeでは無くanchorにinteractionする場合、
             # 再起的にedgeの両端のノードをたたどって、そのノードとの仮想的なedgeを追加する
             interaction_to_anchor = next((item for item in d["anchors"] if item['interaction'] == a["interaction"]), None)
+            
             if interaction_to_anchor is None:
                 pass
             else:
-                ps_edges.append({"node1": interaction_to_anchor["node"], "node2": ps_node_id})
-                ps_edges.append({"node1": ps_node_id, "node2": a["node"]})
+                ps_edges.append({"start_point": interaction_to_anchor["node"], "end_point": ps_node_id})
+                ps_edges.append({"start_point": ps_node_id, "end_point": a["node"]})
         else:
-            ps_edges.append({"node1": interaction["node1"],"node2":ps_node_id})
-            ps_edges.append({"node1": ps_node_id, "node2": interaction["node2"]})
-            ps_edges.append({"node1": ps_node_id, "node2": a["node"]})
+            ps_edges.append({"start_point": interaction["start_point"],"end_point":ps_node_id})
+            ps_edges.append({"start_point": ps_node_id, "end_point": interaction["end_point"]})
+            # 仮想インタラクション（node-anchorのnodeとinteractionの両端のインタラクション）を追加
+            ps_edges.append({"start_point": ps_node_id, "end_point": a["node"]})
 
     d["nodes"].extend(ps_nodes)
-    d["edges"].extend(ps_edges)
+    d["interactions"].extend(ps_edges)
     return d
     
     # 以下、一階層に対してしか対応できないため、一旦保留
-    # anchorsのinteractionをキーにedgesからnode1,node2の二つのノードを取得し
+    # anchorsのinteractionをキーにedgesからstart_point,end_pointの二つのノードを取得し
     # anchor１レコードから二つの擬似的なedgeを作成する
     ps_edges = []
     for a in d["anchors"]:
@@ -49,8 +65,8 @@ def create_psudo_network(d:dict) -> dict:
         # fetch elements with matching edge_id
         interaction = next((item for item in d["edges"] if item['ID'] == edge_id), None)
         # Todo:anchorsのノード要素にinteractionのノード要素を連結する二つのedgeを作成を追加する
-        ps_edges.extend([{"node1": interaction["node1"],
-                          "node2": a["node"]},{"node1":a["node"], "node2": interaction["node2"]}])
+        ps_edges.extend([{"start_point": interaction["start_point"],
+                          "end_point": a["node"]},{"start_point":a["node"], "end_point": interaction["end_point"]}])
 
     # 既存のedgesにps_edgesを追加する（仮のedgeであり、IDはつけない）
     d["edges"].extend(ps_edges)
@@ -64,7 +80,7 @@ def create_graph(d:dict) -> dict:
     G = nx.Graph()
     node_list = [n["ID"] for n in d["nodes"]]
     G.add_nodes_from(node_list)
-    edge_list = [(e["node1"], e["node2"]) for e in d["edges"]]
+    edge_list = [(e["start_point"], e["end_point"]) for e in d["interactions"]]
     G.add_edges_from(edge_list)
     return G
 
@@ -97,8 +113,9 @@ def main(d:dict) -> dict:
     # 基本だがPathwayを表している感じがあまりしない
     # pos = nx.spring_layout(G, k=1, seed=10)
     nx.draw(G, pos, with_labels=True)
-    plt.show()
+    # plt.show()
     return pos
+
 
 
 if __name__ == '__main__':

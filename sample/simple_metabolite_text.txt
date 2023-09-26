@@ -1,17 +1,17 @@
-# root
-name, organism
-simple pathway, Canis familiaris
+# pathway
+name, organism, layout(optional)
+simple pathway, Canis familiaris, dot
 
 # nodes
 Label,BiologicalType,ID
-Metabolite1,Metabolite,n001
-Metabolite2,Metabolite,n002
-GeneProduct1,GeneProduct,n003
+Metabolite1,Metabolite,n0001
+Metabolite2,Metabolite,n0002
+GeneProduct1,GeneProduct,n0003
 
-# edges
-node1,node2,BiologicalType,ID
-n001,n002,Arrow,i001
+# interaction
+start_point,end_point,BiologicalType,ID,anchor
+n0001,n0002,Arrow,i0001,false
 
 # anchors
-node,interaction,BiologicalType,ID
-n003,i001,mim-catalysis,a001
+node,interaction,BiologicalType, position, ID
+n0003,i0001,mim-catalysis,0.5,a0001

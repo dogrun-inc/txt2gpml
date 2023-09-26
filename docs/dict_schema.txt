@@ -1,0 +1,13 @@
+# GPML を生成するための Pathway の情報を渡す Dict
+
+Attributes:
+    Pathway (Dict):
+        { Name (str), Organism (str), BoardWidth (float), BoardHeight (float) }
+    Nodes (List[Dict]):
+        [{ TextLabel (str), GraphId (str: /[a-f][0-9a-f]{4}/), BiologicalType (str), CenterX (float), CenterY(float) }]
+    Interactions (List[Dict]):
+        [{ GraphId (str: /[a-f][0-9a-f]{4}/), BiologicalType (str),
+            Points ([{ X (float), Y (float), GraphRef (str), RelX (float), RelY (float) }]) }]
+    Anchors (List[Dict]):
+        [{ Position (float), GraphId (str: /[a-f][0-9a-f]{4}/), BiologicalType (str),
+        Points ([{ X (float), Y (float), GraphRef (str), RelX (float), RelY (float) }]) }]

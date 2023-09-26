@@ -1,5 +1,4 @@
-### root
-# organism, nameが必要！！
+# pathway
 name, organism
 CBD synthetic pathway, Arabidopsis thaliana
 
