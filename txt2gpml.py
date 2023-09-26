@@ -48,7 +48,7 @@ def dict2etree(pathway):
         ElementTree: GPML のもととなる ElementTree
     """
     root = ET.Element('Pathway')
-    root.set('xmlns', 'http://pathvisio.org/GPML/2021')
+    root.set('xmlns', 'http://pathvisio.org/GPML/2013a')
     root.set('Name', pathway['Pathway']['Name'])
     root.set('Version', datetime.datetime.now().strftime('%Y%m%d'))
     root.set('Organism', pathway['Pathway']['Organism'])
@@ -107,7 +107,7 @@ def dict2etree(pathway):
             int_anchor = ET.SubElement(int_graphics, 'Anchor')
             int_anchor.set('Position', str(anchor['Position']))
             int_anchor.set('GraphId', anchor['GraphId'])
-            int_anchor.set('Shape', anchor['BiologicalType'] if 'BiologicalType' in anchor else 'None')
+            int_anchor.set('Shape', 'None')
 
     return root
 
