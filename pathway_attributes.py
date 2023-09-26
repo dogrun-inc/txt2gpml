@@ -7,6 +7,10 @@ def main(file:str):
     # テキストデータを読み込む
     # Todo: rpdを修正したデータファイルの形式に合わせてアップデートする
     source_dict = rpf.main(file)
+    for idx, inter in enumerate(source_dict['interactions']):
+        anchors = [a['ID'] for a in source_dict['anchors']]
+        source_dict['interactions'][idx]['has_anchor'] =\
+            (inter['start_point'] in anchors) or (inter['end_point'] in anchors)
     print("source: ", source_dict)
     # 擬似グラフを作成し、ノードの座標を取得する
     node_position = nop.main(source_dict)
@@ -14,6 +18,10 @@ def main(file:str):
     # interactionのstart_point, end_pointの座標とRelXYを生成する
     interaction_position = ip.main(source_dict, node_position)
     print(interaction_position)
+
+
+
+
 
     max_x = max(p[0] for p in node_position.values())
     max_y = max(p[1] for p in node_position.values())

@@ -2,7 +2,7 @@
 from typing import Tuple
 import get_rel_xy as grxy
 
-def get_anchor_xy(start_xy: Tuple[float], end_xy: Tuple[float], relative_position: float) -> Tuple[float]:
+def get_anchor_xy(interaction_position: dict, relative_position: float) -> Tuple[float]:
     """
     Interactionの始点、終点と、Anchorの相対位置から、Anchorの座標を返す
     
@@ -14,7 +14,9 @@ def get_anchor_xy(start_xy: Tuple[float], end_xy: Tuple[float], relative_positio
     Returns:
         Tuple[float]: Anchorのxy座標
     """
-    return tuple[float](start_xy[i] + (end_xy[i] - start_xy[i]) * relative_position for i in (0, 1))
+    start_point = interaction_position['start_point']
+    end_point = interaction_position['end_point']
+    return tuple[float](start_point[i] + (end_point[i] - start_point[i]) * relative_position for i in ('x', 'y'))
 
 
 
@@ -31,7 +33,7 @@ def main(source: dict, nodes:dict):
     interactions = source["interactions"]
     iteraction_position = {}
     print("indertaction", interactions)
-    for i in filter(lambda inter: inter.get('anchor') == 'false', interactions):
+    for i in filter(lambda inter: inter.get('has_anchor') == False, interactions):
         # interactionのidは i["ID"]で取得できる
         # interactionのstart, endのnodeのidは i["start_point"], i["end_point"]で取得できる
         # start_position, end_positionの(CenterX,CenterY)座標を渡す< nodes[id]
@@ -39,9 +41,13 @@ def main(source: dict, nodes:dict):
         iteraction_position[i["ID"]]['start_point']['GraphRef'] = i['start_point']
         iteraction_position[i["ID"]]['end_point']['GraphRef'] = i['end_point']
 
-    for i in filter(lambda inter: inter.get('anchor') == 'true', interactions):
-
-        end_point = get_anchor_xy(nodes[i["start_point"]], iteraction_position[i["interaction"]]['end_point'], float(i["position"]))
+    for i in filter(lambda inter: inter.get('has_anchor') == True, interactions):
+        # endpointがanchorのid, anchorのendpointのstar,とend_pointの座標を渡す
+        anchor = next(a for a in source['anchors'] if a['ID'] == i['end_point'])
+        end_point = get_anchor_xy(iteraction_position[anchor['interaction']], float(i["position"]))
+        iteraction_position[i["ID"]] = grxy.main(nodes[i["start_point"]], end_point, end_rel=False)
+        iteraction_position[i["ID"]]['start_point']['GraphRef'] = i['start_point']
+        iteraction_position[i["ID"]]['end_point']['GraphRef'] = i['end_point']
 
     return iteraction_position
 

@@ -4,7 +4,7 @@ import math
 width = 150
 height = 25
 
-def main(startpoint:list, endpoint:list) -> dict:
+def main(startpoint:list, endpoint:list, start_rel=True, end_rel=True) -> dict:
     """_summary_
     interactionのstart, end二つのxy座標を引数に
     start_point, end_pointのx座標、y座標、RelX, RelYを返す
@@ -31,18 +31,20 @@ def main(startpoint:list, endpoint:list) -> dict:
         start_pointはRelX=0, RelY=-1
         end_pointの座標はRexX=0, RelY=1
         """
+        offset_start = height/2 if not start_rel else 0
+        offset_end = height/2 if not end_rel else 0
         return {
             'start_point': {
                 'x': s['x'],
-                'y': s['y'] - height/2,
+                'y': s['y'] - offset_start,
                 'RelX': 0,
-                'RelY': -1
+                'RelY': -1 if start_rel else 0
             },
             'end_point': {
                 'x': e['x'],
-                'y': e['y'] + height/2,
+                'y': e['y'] + offset_end,
                 'RelX': 0,
-                'RelY': 1
+                'RelY': 1 if end_rel else 0
             }
         }
     elif -0.25*math.pi <= radian < 0.25*math.pi:
@@ -50,17 +52,19 @@ def main(startpoint:list, endpoint:list) -> dict:
         start_pointはRelX=1, RelY=0
         end_pointはRelX=-1, RelY=0
         """
+        offset_start = width/2 if not start_rel else 0
+        offset_end = width/2 if not end_rel else 0
         return {
             'start_point': {
-                'x': s['x'] + width/2,
+                'x': s['x'] + offset_start,
                 'y': s['y'],
                 'RelX': 1,
                 'RelY': 0
             },
             'end_point': {
-                'x': e['x'] - width/2,
+                'x': e['x'] - offset_end,
                 'y': e['y'],
-                'RelX': -1,
+                'RelX': -1  if end_rel else 0,
                 'RelY': 0   
             }
         }
@@ -70,18 +74,20 @@ def main(startpoint:list, endpoint:list) -> dict:
         start_pointはRelX=0, RelY=1
         end_pointはRelX=0, RelY=-1
         """
+        offset_start = height/2 if not start_rel else 0
+        offset_end = height/2 if not end_rel else 0
         return {
             'start_point': {
                 'x': s['x'],
-                'y': s['y'] + height/2,
+                'y': s['y'] + offset_start,
                 'RelX': 0,
-                'RelY': 1
+                'RelY': 1 if start_rel else 0
             },
             'end_pooint': {
                 'x': e['x'],
-                'y': e['y'] - height/2,
+                'y': e['y'] - offset_end,
                 'RelX': 0,
-                'RelY': -1
+                'RelY': -1 if end_rel else 0
             }
         }
     elif 0.75*math.pi <= radian or radian < -0.75*math.pi:
@@ -89,17 +95,19 @@ def main(startpoint:list, endpoint:list) -> dict:
         start_pointはRelX=-1, RelY=0
         end_pointはRelX=1, RelY=0
         """
+        offset_start = width/2 if not start_rel else 0
+        offset_end = width/2 if not end_rel else 0
         return {
             'start_point': {
-                'x': s['x'] - width/2,
+                'x': s['x'] - offset_start,
                 'y': s['y'],
-                'RelX': -1,
+                'RelX': -1 if start_rel else 0,
                 'RelY': 0
             },
             'end_point': {
-                'x': e['x'] + width/2,
+                'x': e['x'] + offset_end,
                 'y': e['y'],
-                'RelX': 1,
+                'RelX': 1 if end_rel else 0,
                 'RelY': 0
             }   
         }

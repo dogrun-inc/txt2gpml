@@ -15,4 +15,4 @@ n0003,a0001,mim-catalysis,i0002
 
 # anchors
 interaction, position, ID
-i0001,0.5,a0001
+i0002,0.5,a0001
