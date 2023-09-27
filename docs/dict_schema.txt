@@ -9,5 +9,5 @@ Attributes:
         [{ GraphId (str: /[a-f][0-9a-f]{4}/), BiologicalType (str),
             Points ([{ X (float), Y (float), GraphRef (str), RelX (float), RelY (float) }]) }]
     Anchors (List[Dict]):
-        [{ Position (float), GraphId (str: /[a-f][0-9a-f]{4}/), BiologicalType (str),
+        [{ Position (float), GraphId (str: /[a-f][0-9a-f]{4}/), 
         Points ([{ X (float), Y (float), GraphRef (str), RelX (float), RelY (float) }]) }]

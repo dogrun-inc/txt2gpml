@@ -31,7 +31,6 @@ def create_psudo_network(d:dict) -> dict:
         # b. anchorが乗るinteractionのstart_point, end_pointのノードを取得
         ps_start_point = ps_interaction["start_point"] 
         ps_end_point = ps_interaction["end_point"]
-        print("test", ps_interaction,ps_start_point, ps_end_point)
         # c. anchorとinteractionのstart_point, end_pointのノードとanchorを結ぶ仮想エッジを生成し、ps_edges:listに追加する
         # interactionの両端ノードとanchorを結ぶ二つの仮想エッジを生成する
         ps_edges.extend([{"start_point": ps_start_point, "end_point": ps_node_id, "ID": ps_node_id},
