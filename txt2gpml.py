@@ -53,7 +53,6 @@ def dict2etree(pathway):
     Returns:
         ElementTree: GPML のもととなる ElementTree
     """
-    print("pathway:", pathway)
     root = ET.Element('Pathway')
     root.set('xmlns', 'http://pathvisio.org/GPML/2013a')
     root.set('Name', pathway['Pathway']['Name'])
