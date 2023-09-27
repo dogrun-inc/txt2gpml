@@ -5,23 +5,21 @@ import interaction_position as ip
 
 def main(file:str):
     # テキストデータを読み込む
-    # Todo: rpdを修正したデータファイルの形式に合わせてアップデートする
+    # Todo: カラム名にstrip()をかける
     source_dict = rpf.main(file)
+    #print("anchors: ", source_dict['anchors'])
+    #print("interactions: ", source_dict['interactions'] )
     for idx, inter in enumerate(source_dict['interactions']):
         anchors = [a['ID'] for a in source_dict['anchors']]
         source_dict['interactions'][idx]['has_anchor'] =\
             (inter['start_point'] in anchors) or (inter['end_point'] in anchors)
-    print("source: ", source_dict)
+    #print("source: ", source_dict)
     # 擬似グラフを作成し、ノードの座標を取得する
     node_position = nop.main(source_dict)
-    print("node_position",node_position)
+    #print("node_position",node_position)
     # interactionのstart_point, end_pointの座標とRelXYを生成する
     interaction_position = ip.main(source_dict, node_position)
-    print(interaction_position)
-
-
-
-
+    #print(interaction_position)
 
     max_x = max(p[0] for p in node_position.values())
     max_y = max(p[1] for p in node_position.values())
@@ -59,10 +57,8 @@ def main(file:str):
                 ]
             }
 
-    # anchorの座標を生成する
 
-    # ソースファイルより読み込んだ属性をdictに追加する
-
+    #print(pathway)
 
 if __name__ == "__main__":
     main("sample/simple_metabolite_text.txt")

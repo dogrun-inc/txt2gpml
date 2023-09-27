@@ -19,7 +19,6 @@ def get_anchor_xy(interaction_position: dict, relative_position: float) -> Tuple
     return tuple[float](start_point[i] + (end_point[i] - start_point[i]) * relative_position for i in ('x', 'y'))
 
 
-
 def main(source: dict, nodes:dict):
     """
     - source_dictからinteractionを抽出し、さらにinteractionのstart_point, end_pointの各座標をノードの座標から生成する
@@ -32,7 +31,6 @@ def main(source: dict, nodes:dict):
     """
     interactions = source["interactions"]
     iteraction_position = {}
-    print("indertaction", interactions)
     for i in filter(lambda inter: inter.get('has_anchor') == False, interactions):
         # interactionのidは i["ID"]で取得できる
         # interactionのstart, endのnodeのidは i["start_point"], i["end_point"]で取得できる
@@ -42,6 +40,7 @@ def main(source: dict, nodes:dict):
         iteraction_position[i["ID"]]['end_point']['GraphRef'] = i['end_point']
 
     for i in filter(lambda inter: inter.get('has_anchor') == True, interactions):
+        print("i", i)
         # endpointがanchorのid, anchorのendpointのstar,とend_pointの座標を渡す
         anchor = next(a for a in source['anchors'] if a['ID'] == i['end_point'])
         end_point = get_anchor_xy(iteraction_position[anchor['interaction']], float(i["position"]))

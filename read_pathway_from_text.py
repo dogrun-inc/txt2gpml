@@ -22,11 +22,11 @@ def get_blcoks(rows:list):
     start_pathway = [i for i, r in enumerate(rows) if r.startswith("# pathway")]
     # 1. find the position (index) of nodes, edges, anchors
     start_nodes = [i for i, r in enumerate(rows) if r.startswith("# nodes")]
-    start_edges = [i for i, r in enumerate(rows) if r.startswith("# interaction")]
+    start_edges = [i for i, r in enumerate(rows) if r.startswith("# interactions")]
     start_anchors = [i for i, r in enumerate(rows) if r.startswith("# anchors")]
     blank_rows = [i for i, r in enumerate(rows) if r == ""]
-    # 2. find the position of the nearest blank line
 
+    # 2. find the position of the nearest blank line (もしくは無限大)
     position_end_pathway = min(blank_rows, key=lambda x:x-start_pathway[0]if x > start_pathway[0] else float('inf'))
     position_end_nodes = min(blank_rows, key=lambda x:x-start_nodes[0]if x > start_nodes[0] else float('inf'))
     position_end_edges = min(blank_rows, key=lambda x:x-start_edges[0]if x > start_edges[0] else float('inf'))    

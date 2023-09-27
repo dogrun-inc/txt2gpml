@@ -13,49 +13,34 @@ def create_psudo_network(d:dict) -> dict:
     Returns:
         dict: network data (node list, edgelist) with psudo-nodes and psudo-edges
     """
-    # Todo: anchorにedgeが接続するケースを考慮する（CBDの例ではnode ID 13のケース）
-    # Todo: anchorを擬似的なnodeとして追加する方向で考える
-    # i) 一つのanchorに対して一つのnodeを追加する
-    # ii) i)で追加したノードとanchorのノードを連結した仮想的なedgeを追加する
-    # iii) anchorとinteractionのstart,
+    # 2023/9/27 データ構造変更に伴い仮想グラフ(=psudo_graph)の作成方法を変更
+    # i. anchor仮想ノードとしてps_nodesに追加する  ok
+    # ii. 仮想エッジを生成する。anchorと両端の（interaction両端）のノードを結ぶ
+    # iii. ファイルより読み込んだnodesとinteractionsにps_nodeをps_edgeを追加する
 
-    #
-    # Todo: anchorに座標が必要
-    # Interactionがnode-anchorの場合（anchor=true）は、レイアウト用のedgeに読み込まないようにする
-    # node-anchorのInteractionの場合のnodeの座標も必要で、anchorの座標とのnodeのCenterXYから計算する
-    #    
-    print(d)
     ps_nodes = []
     ps_edges = []
     for a in d["anchors"]:
-        # 仮想ノード を追加
-        ps_node_id = "a" + a["interaction"]
+        # anchorを仮想ノードとしてps_nodesに追加
+        ps_node_id = a["ID"]
         ps_nodes.append({"ID": ps_node_id})
 
-        print("a:", a)
-        print(d["anchors"])
-        #
-        interaction = next((item for item in d["interactions"] if item['ID'] == a["interaction"]), None)
-        if interaction is None:
-            # Todo: nodeがedgeでは無くanchorにinteractionする場合、
-            # 再起的にedgeの両端のノードをたたどって、そのノードとの仮想的なedgeを追加する
-            interaction_to_anchor = next((item for item in d["anchors"] if item['interaction'] == a["interaction"]), None)
-            
-            if interaction_to_anchor is None:
-                pass
-            else:
-                ps_edges.append({"start_point": interaction_to_anchor["node"], "end_point": ps_node_id})
-                ps_edges.append({"start_point": ps_node_id, "end_point": a["node"]})
-        else:
-            ps_edges.append({"start_point": interaction["start_point"],"end_point":ps_node_id})
-            ps_edges.append({"start_point": ps_node_id, "end_point": interaction["end_point"]})
-            # 仮想インタラクション（node-anchorのnodeとinteractionの両端のインタラクション）を追加
-            ps_edges.append({"start_point": ps_node_id, "end_point": a["node"]})
+        # 仮想エッジを追加
+        # a. anchorを抽出し、anchorが乗るinteractionを取得
+        ps_interaction = next((item for item in d["interactions"] if item['ID'] == a["interaction"]), None)
+        # b. anchorが乗るinteractionのstart_point, end_pointのノードを取得
+        ps_start_point = ps_interaction["start_point"] 
+        ps_end_point = ps_interaction["end_point"]
+        print("test", ps_interaction,ps_start_point, ps_end_point)
+        # c. anchorとinteractionのstart_point, end_pointのノードとanchorを結ぶ仮想エッジを生成し、ps_edges:listに追加する
+        # interactionの両端ノードとanchorを結ぶ二つの仮想エッジを生成する
+        ps_edges.extend([{"start_point": ps_start_point, "end_point": ps_node_id, "ID": ps_node_id},
+                          {"start_point": ps_node_id, "end_point": ps_end_point, "ID": ps_node_id}])
 
     d["nodes"].extend(ps_nodes)
     d["interactions"].extend(ps_edges)
     return d
-    
+
     # 以下、一階層に対してしか対応できないため、一旦保留
     # anchorsのinteractionをキーにedgesからstart_point,end_pointの二つのノードを取得し
     # anchor１レコードから二つの擬似的なedgeを作成する
@@ -80,8 +65,12 @@ def create_graph(d:dict) -> dict:
     G = nx.Graph()
     node_list = [n["ID"] for n in d["nodes"]]
     G.add_nodes_from(node_list)
+    ###
+    # Todo: interactionsの要素がリストとしてeが取得されるケースがある
+    ###
     edge_list = [(e["start_point"], e["end_point"]) for e in d["interactions"]]
     G.add_edges_from(edge_list)
+
     return G
 
 
@@ -113,9 +102,8 @@ def main(d:dict) -> dict:
     # 基本だがPathwayを表している感じがあまりしない
     # pos = nx.spring_layout(G, k=1, seed=10)
     nx.draw(G, pos, with_labels=True)
-    # plt.show()
+    #plt.show()
     return pos
-
 
 
 if __name__ == '__main__':
