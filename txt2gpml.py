@@ -2,6 +2,7 @@ import xmlschema
 import json
 import xml.etree.ElementTree as ET
 import datetime
+import pathway_attributes
 
 xsd_path = './sample/GPML2021.xsd'
 gpml2021schema = xmlschema.XMLSchema(xsd_path)
@@ -47,6 +48,7 @@ def dict2etree(pathway):
     Returns:
         ElementTree: GPML のもととなる ElementTree
     """
+    print(pathway)
     root = ET.Element('Pathway')
     root.set('xmlns', 'http://pathvisio.org/GPML/2013a')
     root.set('Name', pathway['Pathway']['Name'])
@@ -122,6 +124,8 @@ def main(jsondata):
 
 
 if __name__ == '__main__':
+    root = dict2etree(pathway_attributes.main("sample/simple_metabolite_text.txt"))
+    print(root)
     #main(jsondata)
-    simle_schema_test()
+    #simle_schema_test()
     #most_simple_schema_test()
