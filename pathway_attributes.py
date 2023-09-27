@@ -32,7 +32,7 @@ def main(file:str):
                     'CenterX': node_position[n['ID']][0], 'CenterY': node_position[n['ID']][1]}
                     for n in source_dict['nodes'] if n.get("Label")
                 ],
-                'Interations': [
+                'Interactions': [
                     {'GraphId': i['ID'], 'BiologicalType': i['BiologicalType'],
                      'Points': [
                            {'X': interaction_position[i['ID']]['start_point']['x'],
