@@ -42,14 +42,16 @@ def main(source: dict, nodes:dict):
 
     # pathway_attributesの最終出力にanchorを持つinteractionの情報の追加
     for i in filter(lambda inter: inter.get('has_anchor') == True, interactions):
+        print("i", i)
         anchor = next(a for a in source['anchors'] if a['ID'] == i['end_point'])
         # anchorの座標を取得する。anchorの置かれたinteractionの両端の座標　と相対位置を引数にする
         # anchorはinteractionのend_pointに置くように運用的に固定する
         # start_point, end_pointそれぞれのx,y座標（{'start_point': {'x': 62.497, 'y': 162.0, 'RelX': 0, 'RelY': -1, 'GraphRef': 'n0001'}, 'end_point': {'x': 32.497, 'y': 90.0, 'RelX': 0, 'RelY': 1, 'GraphRef': 'n0002'}）を渡す
         # 第二引数としてanchorの相対位置（position）を渡す
         end_point = get_anchor_xy(iteraction_position[anchor['interaction']], float(anchor["position"]))
-
+        
         iteraction_position[i["ID"]] = grxy.main(nodes[i["start_point"]], end_point, end_rel=False)
+        print(iteraction_position[i["ID"]])
         iteraction_position[i["ID"]]['start_point']['GraphRef'] = i['start_point']
         iteraction_position[i["ID"]]['end_point']['GraphRef'] = i['end_point']
 

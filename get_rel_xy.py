@@ -83,7 +83,7 @@ def main(startpoint:list, endpoint:list, start_rel=True, end_rel=True) -> dict:
                 'RelX': 0,
                 'RelY': 1 if start_rel else 0
             },
-            'end_pooint': {
+            'end_point': {
                 'x': e['x'],
                 'y': e['y'] - offset_end,
                 'RelX': 0,
