@@ -49,7 +49,7 @@ def main(file:str):
                     for i in source_dict['interactions'] if i.get("BiologicalType")
                 ],
                 'Anchors': [
-                    {'Position': a['position'], 'GraphId': a['ID']}
+                    {'Position': a['position'], 'GraphId': a['ID'], 'Interaction': a['interaction']}
                     for a in source_dict['anchors']
                 ]
             }

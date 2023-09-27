@@ -100,8 +100,11 @@ def dict2etree(pathway):
         data_xref = ET.SubElement(int_root, 'Xref')
         data_xref.set('Database', '')
         data_xref.set('ID', '')
-
-        anchors = list(filter(lambda a: a['interaction'] == interaction['ID'], pathway['Anchors']))
+        # 
+        print("Anchors",pathway['Anchors'])
+        print("interaction",interaction)
+        # 
+        anchors = list(filter(lambda a: a['Interaction'] == interaction['GraphId'], pathway['Anchors']))
         if len(anchors) == 0:
             continue
 
