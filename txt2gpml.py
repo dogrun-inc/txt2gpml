@@ -3,6 +3,7 @@ import json
 import xml.etree.ElementTree as ET
 import datetime
 import pathway_attributes
+import argparse
 
 xsd_path = './sample/GPML2021.xsd'
 gpml2021schema = xmlschema.XMLSchema(xsd_path)
@@ -11,6 +12,10 @@ jsondata = {
     "Comment": "test Comment"
 }
 
+parser = argparse.ArgumentParser(description='txt2gpml')
+parser.add_argument('-i', '--input', help='input file name')
+parser.add_argument('-o', '--output', help='output file name')
+args = parser.parse_args()
 
 def simle_schema_test():
     schema_file = open("/Users/oec/Dropbox/workspace/bio/txt2gpml/sample/test_test2.xsd").read()
@@ -130,7 +135,9 @@ def main(jsondata):
 
 
 if __name__ == '__main__':
-    root = dict2etree(pathway_attributes.main("sample/simple_metabolite_text.txt"))
-    #ET.tostring(root, encoding='utf-8', method='xml').decode()
+    input_name = args.input
+    output_name = args.output
+    # root = dict2etree(pathway_attributes.main("sample/simple_metabolite_text.txt"))
+    root = dict2etree(pathway_attributes.main(input_name))
     tree = ET.ElementTree(root)
-    tree.write('test.xml', encoding='utf-8', xml_declaration=True)
+    tree.write(output_name, encoding='utf-8', xml_declaration=True)
