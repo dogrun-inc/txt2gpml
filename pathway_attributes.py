@@ -55,7 +55,7 @@ def main(file:str):
             }
 
 
-    print(pathway)
+    return pathway
 
 if __name__ == "__main__":
     main("sample/simple_metabolite_text.txt")
