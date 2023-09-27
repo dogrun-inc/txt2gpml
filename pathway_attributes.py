@@ -24,24 +24,24 @@ def main(file:str):
     pathway = { 'Pathway': {
                    'Name': source_dict['pathway']['name'],
                    'Organism': source_dict['pathway']['organism'],
-                   'BoardWidth': max_x + 100,
-                   'BoardHeight': max_y + 30,
+                   'BoardWidth': str(max_x + 100),
+                   'BoardHeight': str(max_y + 30),
                 },
                 'Nodes': [
                     {'TextLabel': n['Label'], 'GraphId': n['ID'], 'BiologicalType': n['BiologicalType'],
-                    'CenterX': node_position[n['ID']][0], 'CenterY': node_position[n['ID']][1]}
+                    'CenterX': str(node_position[n['ID']][0]), 'CenterY': str(node_position[n['ID']][1])}
                     for n in source_dict['nodes'] if n.get("Label")
                 ],
                 'Interactions': [
                     {'GraphId': i['ID'], 'BiologicalType': i['BiologicalType'],
                      'Points': [
-                           {'X': interaction_position[i['ID']]['start_point']['x'],
-                            'Y': interaction_position[i['ID']]['start_point']['y'],
+                           {'X': str(interaction_position[i['ID']]['start_point']['x']),
+                            'Y': str(interaction_position[i['ID']]['start_point']['y']),
                             'RelX': interaction_position[i['ID']]['start_point']['RelX'],
                             'RelY': interaction_position[i['ID']]['start_point']['RelY'],
                             'GraphRef': interaction_position[i['ID']]['start_point']['GraphRef']},
-                           {'X': interaction_position[i['ID']]['end_point']['x'],
-                            'Y': interaction_position[i['ID']]['end_point']['y'],
+                           {'X': str(interaction_position[i['ID']]['end_point']['x']),
+                            'Y': str(interaction_position[i['ID']]['end_point']['y']),
                             'RelX': interaction_position[i['ID']]['end_point']['RelX'],
                             'RelY': interaction_position[i['ID']]['end_point']['RelY'],
                             'GraphRef': interaction_position[i['ID']]['end_point']['GraphRef']},
@@ -49,7 +49,7 @@ def main(file:str):
                     for i in source_dict['interactions'] if i.get("BiologicalType")
                 ],
                 'Anchors': [
-                    {'Position': a['position'], 'GraphId': a['ID'], 'Interaction': a['interaction']}
+                    {'Position': str(a['position']), 'GraphId': a['ID'], 'Interaction': a['interaction']}
                     for a in source_dict['anchors']
                 ]
             }

@@ -48,7 +48,7 @@ def dict2etree(pathway):
     Returns:
         ElementTree: GPML のもととなる ElementTree
     """
-    print(pathway)
+    print("pathway:", pathway)
     root = ET.Element('Pathway')
     root.set('xmlns', 'http://pathvisio.org/GPML/2013a')
     root.set('Name', pathway['Pathway']['Name'])
@@ -101,9 +101,6 @@ def dict2etree(pathway):
         data_xref.set('Database', '')
         data_xref.set('ID', '')
         # 
-        print("Anchors",pathway['Anchors'])
-        print("interaction",interaction)
-        # 
         anchors = list(filter(lambda a: a['Interaction'] == interaction['GraphId'], pathway['Anchors']))
         if len(anchors) == 0:
             continue
@@ -113,6 +110,12 @@ def dict2etree(pathway):
             int_anchor.set('Position', str(anchor['Position']))
             int_anchor.set('GraphId', anchor['GraphId'])
             int_anchor.set('Shape', 'None')
+
+    infobox = ET.SubElement(root, 'InfoBox')
+    infobox.set('CenterX', '0.0')
+    infobox.set('CenterY', '0.0')
+
+    biopax = ET.SubElement(root, 'Biopax')
 
     return root
 
@@ -128,7 +131,6 @@ def main(jsondata):
 
 if __name__ == '__main__':
     root = dict2etree(pathway_attributes.main("sample/simple_metabolite_text.txt"))
-    print(root)
-    #main(jsondata)
-    #simle_schema_test()
-    #most_simple_schema_test()
+    #ET.tostring(root, encoding='utf-8', method='xml').decode()
+    tree = ET.ElementTree(root)
+    tree.write('test.xml', encoding='utf-8', xml_declaration=True)
