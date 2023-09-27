@@ -101,7 +101,7 @@ def dict2etree(pathway):
         data_xref.set('Database', '')
         data_xref.set('ID', '')
 
-        anchors = list(filter(lambda a: a['interaction'] == interaction['ID'], pathway['anchors']))
+        anchors = list(filter(lambda a: a['interaction'] == interaction['ID'], pathway['Anchors']))
         if len(anchors) == 0:
             continue
 
