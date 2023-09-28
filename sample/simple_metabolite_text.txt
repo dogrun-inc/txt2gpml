@@ -1,7 +1,6 @@
 # pathway
-name,organism,layout(optional)
+name,organism,layout
 simple pathway,Canis familiaris,dot
-
 # nodes
 Label,BiologicalType,ID
 Metabolite1,Metabolite,n0001

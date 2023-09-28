@@ -1,3 +1,4 @@
+import re
 import networkx as nx
 from typing import Tuple
 from networkx.drawing.nx_agraph import graphviz_layout
@@ -40,22 +41,6 @@ def create_psudo_network(d:dict) -> dict:
     d["interactions"].extend(ps_edges)
     return d
 
-    # 以下、一階層に対してしか対応できないため、一旦保留
-    # anchorsのinteractionをキーにedgesからstart_point,end_pointの二つのノードを取得し
-    # anchor１レコードから二つの擬似的なedgeを作成する
-    ps_edges = []
-    for a in d["anchors"]:
-        edge_id = a["interaction"]
-        # fetch elements with matching edge_id
-        interaction = next((item for item in d["edges"] if item['ID'] == edge_id), None)
-        # Todo:anchorsのノード要素にinteractionのノード要素を連結する二つのedgeを作成を追加する
-        ps_edges.extend([{"start_point": interaction["start_point"],
-                          "end_point": a["node"]},{"start_point":a["node"], "end_point": interaction["end_point"]}])
-
-    # 既存のedgesにps_edgesを追加する（仮のedgeであり、IDはつけない）
-    d["edges"].extend(ps_edges)
-    return d
-
 
 def create_graph(d:dict) -> dict:
     """_summary_
@@ -86,7 +71,9 @@ def main(d:dict) -> dict:
         dict: x,y positions of nodes ex. {'n001': (103.6, 162.0), 'n002': (178.6, 162.0), 'n003': (28.597, 162.0),
           'ai001': (44.597, 90.0), 'noo2': (73.597, 18.0)}
     """
-
+    prg_option = d["pathway"].get("layout")
+    prg_option_r = re.sub(r'[\W_]+', '', prg_option)
+    prg = prg_option_r if prg_option_r else 'circo'
 
     # convert anchors to psudo-edges
     psudo_graph = create_psudo_network(d)
@@ -96,7 +83,7 @@ def main(d:dict) -> dict:
     # 階層的レイアウト(dot)がPatywayのイメージに最もマッチするとおもわれる。その他circo,fdpなども良いかもしれない
     # root=0の有無はレイアウトに鋭意強しない
     #pos = graphviz_layout(G, prog='dot', root=0)
-    pos = graphviz_layout(G, prog='circo', root=0)
+    pos = graphviz_layout(G, prog=prg, root=0)
 
     # 基本だがPathwayを表している感じがあまりしない
     #pos = nx.spring_layout(G, k=1, seed=10)
