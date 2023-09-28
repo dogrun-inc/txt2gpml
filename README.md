@@ -1,26 +1,69 @@
 # txt2gpml
-Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathways.org/)](https://www.wikipathways.org/) from nodes and interactions data described in csv file.
+Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathways.org/)](https://www.wikipathways.org/) from nodes and interactions data described in text format.
 
-## Input file format
+## 環境
 
-- comma-separated data of nodes, edges, and anchors for each block.
+
+## Input data format
+
+- comma-separated data of pathway, nodes, edges, and anchors for each block.
 - If each block is preceded by a comment describing the type, for example, a line beginning with "# node", it is treated as a block describing a node up to the following empty line.
 - The first line of each block describes the header. The headers are converted to dictionary keys after the file is read.
 - NODE records always specify an ID.
 - The edge describes the start node and target node, each with a node ID.
 - The anchor describes the node and interaction, and is described as edge ID and node ID, respectively.
-- ノード、インタラクション, アンカーにはIDをつけるが、a-fのアルファベットを頭文字にした5桁もしくは8桁のIDをつける
+- ノード、インタラクション, アンカーにはIDをつける。各IDはa-fのアルファベットを頭文字にした5桁もしくは8桁の文字列。
 
-## Reading files and converting to dict: read_pathway_from_text
+```
+# pathway
+name,organism, 
 
-- Read files in the read_pathway_from_text module and convert them to dict format.
+# nodes
+Label, BiologicalType,ID
 
-## ノードの座標決定: node_position
+# interactions
+start_point,end_point,BiologicalType
 
-- xmlを生成する際に必要な各ノードの座標は、パスウェイを擬似的なネットワークデータに変換してnetworkxの機能を使って生成する
+# anchors
+interaction,position,ID
+```
+
+### pathway
+- name
+- organism
+
+### nodes
+- Label
+- BiologicalType
+- ID
+
+### interactions
+- start_point
+- end_point
+- BiologicalType
+- ID
+
+### anchors
+- interaction
+- positin
+- ID
+
+## Way to use
+
+```
+$ python txt2gpm.py -i input_file -o output_file_name.gpml
+```
+
+## 実装予定
+- Layout program option (dot,)
+- GroupRef attribute
+- Color attribute
+- LineStyle attirbute
+- DB binding
+- Group 
 
 
-## nord, edge, anchorからxmlの生成: txt2gpml
+
 
 
 
