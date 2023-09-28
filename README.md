@@ -1,16 +1,19 @@
 # txt2gpml
 Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathways.org/)](https://www.wikipathways.org/) from nodes and interactions data described in text format.
 
-## 環境
+## Environment
 
+- Python version must be 3.9 or higher
+   - `xmlschema`, `networkx`, `matplotlib` should be installed using `pip`
+- `graphviz` required for `pygraphviz`.
 
 ## Input data format
 
 - comma-separated data of pathway, nodes, edges, and anchors for each block.
 - If each block is preceded by a comment describing the type, for example, a line beginning with "# nodes", it is treated as a block describing a node up to the following empty line.
 - The first line of each block describes the header. The headers are converted to dictionary keys after the file is read.
-- ノード、インタラクション, アンカーにはIDをつける。各IDはa-fのアルファベットを頭文字にした5桁もしくは8桁の文字列。
-
+- IDs must be added for nodes, interactions and anchors. Each ID is a 5- or 8-digit string with the letters a-f as its initials.
+- 
 ```
 # pathway
 name,organism, 
@@ -56,7 +59,8 @@ Anchors describes the interaction in which the anchor is placed, its relative po
 $ python txt2gpm.py -i input_file -o output_file_name.gpml
 ```
 
-## 実装予定
+## To be implemented...
+
 - Layout optimization
 - Option to allow select ayout program option (dot,crco etc)
 - GroupRef attribute
