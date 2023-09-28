@@ -1,4 +1,4 @@
-import xmlschema
+#import xmlschema
 import json
 import xml.etree.ElementTree as ET
 import datetime
@@ -10,17 +10,6 @@ parser = argparse.ArgumentParser(description='txt2gpml')
 parser.add_argument('-i', '--input', help='input file name')
 parser.add_argument('-o', '--output', help='output file name')
 args = parser.parse_args()
-
-def simle_schema_test():
-    #schema_file = open("./sample/test_test2.xsd").read()
-    schema_file = open("").read()
-    schema = xmlschema.XMLSchema(schema_file)
-    #jdata = xmlschema.to_json(xml_document = """<note>this is a Note text</note>""", schema = schema)
-    #jsonData = json.dumps(jdata)
-    jsn_txt = json.dumps({'note': 'this is a Note text','comment': 'this is a Comment text'})
-    #xmldata = xmlschema.from_json(jsn_txt, schema=schema, preserve_root=True, namespaces={"": "urn:oasis:names:tc:emergency:cap:1.2"})
-    xmldata = xmlschema.from_json(jsn_txt, schema=schema, preserve_root=True)
-    ET.ElementTree(xmldata).write('./sample/test_test2.xml')
 
 
 def dict2etree(pathway):
@@ -104,14 +93,11 @@ def dict2etree(pathway):
     return root
 
 
-def main(jsondata):
+def main():
     """
     gpmlをファイルとして書き出す
     """
-    jsn = json.dumps(jsondata, indent=4)
-    xml = xmlschema.from_json(jsn, xmlschema=gpml2021schema)
-    ET.ElementTree(xml).write('test.xml', encoding='utf-8', xml_declaration=True)
-
+    pass
 
 if __name__ == '__main__':
     input_name = args.input
