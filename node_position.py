@@ -72,8 +72,10 @@ def main(d:dict) -> dict:
           'ai001': (44.597, 90.0), 'noo2': (73.597, 18.0)}
     """
     prg_option = d["pathway"].get("layout")
-    prg_option_r = re.sub(r'[\W_]+', '', prg_option)
-    prg = prg_option_r if prg_option_r else 'circo'
+    if prg_option is None:
+        prg = 'circo'
+    else:
+        prg = re.sub(r'[\W_]+', '', prg_option)
 
     # convert anchors to psudo-edges
     psudo_graph = create_psudo_network(d)

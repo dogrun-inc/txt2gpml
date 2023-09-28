@@ -16,7 +16,7 @@ Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathway
 
 ```
 # pathway
-name,organism, 
+name,organism
 
 # nodes
 Label, BiologicalType,ID
@@ -31,6 +31,9 @@ interaction,position,ID
 ### pathway
 - name
 - organism
+- layout(optional)
+
+You can specify the layout of graphviz, such as dot or circo. The default program is circo.
 
 ### nodes
 - Label
@@ -62,7 +65,7 @@ $ python txt2gpm.py -i input_file -o output_file_name.gpml
 ## To be implemented...
 
 - Layout optimization
-- Option to allow select ayout program option (dot,crco etc)
+- Option to allow select ayout program option (dot,crco etc) 
 - GroupRef attribute
 - Color attribute
 - LineStyle attirbute

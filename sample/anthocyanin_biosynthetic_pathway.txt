@@ -1,6 +1,6 @@
 # pathway
-name,organism
-Representative anthocyanin biosynthetic pathway,Arabidopsis thaliana
+name,organism,layout
+Representative anthocyanin biosynthetic pathway,Arabidopsis thaliana,dot
 
 # nodes
 Label,BiologicalType,ID
