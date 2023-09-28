@@ -3,7 +3,7 @@ name,organism
 simple pathway,Canis familiaris
 
 # nodes
-Label,BiologicalType,ID,[GroupRef]
+Label,BiologicalType,ID,[GroupRef],[Color]
 Metabolite1,Metabolite,n0001
 Metabolite2,Metabolite,n0002
 Metabolite3,Metabolite,n0003
