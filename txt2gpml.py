@@ -5,12 +5,6 @@ import datetime
 import pathway_attributes
 import argparse
 
-xsd_path = './sample/GPML2021.xsd'
-gpml2021schema = xmlschema.XMLSchema(xsd_path)
-# dictをjsonに変換する
-jsondata = {
-    "Comment": "test Comment"
-}
 
 parser = argparse.ArgumentParser(description='txt2gpml')
 parser.add_argument('-i', '--input', help='input file name')
@@ -27,21 +21,6 @@ def simle_schema_test():
     #xmldata = xmlschema.from_json(jsn_txt, schema=schema, preserve_root=True, namespaces={"": "urn:oasis:names:tc:emergency:cap:1.2"})
     xmldata = xmlschema.from_json(jsn_txt, schema=schema, preserve_root=True)
     ET.ElementTree(xmldata).write('./sample/test_test2.xml')
-
-
-def most_simple_schema_test():
-    """_summary_
-    最もシンプルなスキーマでのテスト
-    このテストは成功する
-    """
-    my_xsd = '<?xml version="1.0"?> <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> <xs:element name="note" type="xs:string"/> </xs:schema>'
-    # schemaはファイルでもよい
-    schema_file = open("/Users/oec/Dropbox/workspace/bio/txt2gpml/sample/test_test_simple.xsd").read()
-    schema = xmlschema.XMLSchema(schema_file)
-    #schema = xmlschema.XMLSchema(my_xsd)
-    data = json.dumps({'note': 'this is a Note text'})
-    xml = xmlschema.from_json(data, schema=schema, preserve_root=True)
-    ET.ElementTree(xml).write('./sample/simple_test.xml')
 
 
 def dict2etree(pathway):
