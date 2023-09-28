@@ -14,10 +14,8 @@ def main(file:str):
             (inter['start_point'] in anchors) or (inter['end_point'] in anchors)
     # 擬似グラフを作成し、レイアウトしたノードの座標を取得する
     node_position = nop.main(source_dict)
-    #print("node_position",node_position)
     # interactionのstart_point, end_pointの座標とRelXYを生成する
     interaction_position = ip.main(source_dict, node_position)
-    #print(interaction_position)
 
     max_x = max(p[0] for p in node_position.values())
     max_y = max(p[1] for p in node_position.values())

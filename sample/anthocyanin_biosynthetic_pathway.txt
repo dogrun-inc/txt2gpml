@@ -1,0 +1,56 @@
+# pathway
+name,organism
+Representative anthocyanin biosynthetic pathway,Arabidopsis thaliana
+
+# nodes
+Label,BiologicalType,ID
+DL-Phenylalanine,Metabolite,n0001
+Cinnamic acid,Metabolite,n0002
+P-coumaric acid,Metabolite,n0003
+4-Coumaroyl-CoA,Metabolite,n0004
+Naringenin chalcone,Metabolite,n0005
+Naringenin,Metabolite,n0006
+dihydrokaempferol,Metabolite,n0007
+dihydroquercetin,Metabolite,n0008
+Leucocyanidin,Metabolite,n0009
+Cyanidin,Metabolite,n0010
+PAL1,Protein,b0001
+C4H,Protein,b0002
+4CL,Protein,b0003
+CHS,Protein,b0004
+CHI,Protein,b0005
+F3H,Protein,b0006
+DFR,Protein,b0007
+DFR,Protein,b0008
+
+# interactions
+start_point,end_point,BiologicalType,ID
+n0001,n0002,Arrow,i0001
+n0002,n0003,Arrow,i0002
+n0003,n0004,Arrow,i0003
+n0004,n0005,Arrow,i0004
+n0005,n0006,Arrow,i0005
+n0006,n0007,Arrow,i0006
+n0007,n0008,Arrow,i0007
+n0008,n0009,Arrow,i0008
+n0009,n0010,Arrow,i0009
+b0001,a0001,mim-catalysis,i0010
+b0002,a0002,mim-catalysis,i0011
+b0003,a0003,mim-catalysis,i0012
+b0004,a0004,mim-catalysis,i0013
+b0005,a0005,mim-catalysis,i0014
+b0006,a0006,mim-catalysis,i0015
+b0007,a0007,mim-catalysis,i0016
+b0008,a0008,mim-catalysis,i0017
+
+# anchors
+interaction,position,ID
+i0001,0.5,a0001
+i0002,0.5,a0002
+i0003,0.5,a0003
+i0004,0.5,a0004
+i0005,0.5,a0005
+i0006,0.5,a0006
+i0007,0.5,a0007
+i0008,0.5,a0008
+

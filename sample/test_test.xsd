@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<schema targetNamespace = "urn:oasis:names:tc:emergency:cap:1.2" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <element name="note" type="xs:string"/>
-    <element name="age" type="xs:integer"/>
-</schema>

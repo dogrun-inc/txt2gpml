@@ -18,7 +18,8 @@ parser.add_argument('-o', '--output', help='output file name')
 args = parser.parse_args()
 
 def simle_schema_test():
-    schema_file = open("/Users/oec/Dropbox/workspace/bio/txt2gpml/sample/test_test2.xsd").read()
+    #schema_file = open("./sample/test_test2.xsd").read()
+    schema_file = open("").read()
     schema = xmlschema.XMLSchema(schema_file)
     #jdata = xmlschema.to_json(xml_document = """<note>this is a Note text</note>""", schema = schema)
     #jsonData = json.dumps(jdata)
