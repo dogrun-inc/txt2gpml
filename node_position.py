@@ -95,8 +95,8 @@ def main(d:dict) -> dict:
     # get x,y positions of nodes
     # 階層的レイアウト(dot)がPatywayのイメージに最もマッチするとおもわれる。その他circo,fdpなども良いかもしれない
     # root=0の有無はレイアウトに鋭意強しない
-    pos = graphviz_layout(G, prog='dot', root=0)
-    #pos = graphviz_layout(G, prog='circo', root=0)
+    #pos = graphviz_layout(G, prog='dot', root=0)
+    pos = graphviz_layout(G, prog='circo', root=0)
 
     # 基本だがPathwayを表している感じがあまりしない
     #pos = nx.spring_layout(G, k=1, seed=10)
