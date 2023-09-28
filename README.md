@@ -4,7 +4,7 @@ Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathway
 ## Environment
 
 - Python version must be 3.9 or higher
-   - `xmlschema`, `networkx`, `matplotlib` should be installed using `pip`
+   - `networkx`, `matplotlib` should be installed using `pip`
 - `graphviz` required for `pygraphviz`.
 
 ## Input data format
@@ -13,7 +13,7 @@ Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathway
 - If each block is preceded by a comment describing the type, for example, a line beginning with "# nodes", it is treated as a block describing a node up to the following empty line.
 - The first line of each block describes the header. The headers are converted to dictionary keys after the file is read.
 - IDs must be added for nodes, interactions and anchors. Each ID is a 5- or 8-digit string with the letters a-f as its initials.
-- 
+
 ```
 # pathway
 name,organism, 
