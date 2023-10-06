@@ -49,25 +49,52 @@ def node_positions(relative_postions) -> List[dict]:
     return positions
 
 
-def anchor_positions(d:dict, relative_postions) -> List[dict]:
-    """
-    Todo: アンカーの座標を求める。引数は要検討
-    Args:
-        d (dict): _description_
-        relative_postions (_type_): _description_
-
-    Returns:
-        List[dict]: _description_
-    """
-    pass
-
-
 def anchored_node_positions(d:dict, relative_postions) -> List[dict]:
     """
     Todo:
+    anchorに接続するノードのx,y座標を算出し返す.
+    1. anchorの置かれるinteractionを取得
+    2. interactionからanchorに接続するノードを取得
+    3. interactionの両端のノードの座標を取得し、anchorに接続するノードの座標を算出する（ex.正三角形の位置。もしくはanchorのpositionを反映した位置）
     ここまでの処理するとnode_position.pyのgraphvis_layout()と同等の情報がえられる
     """
     pass
+
+
+
+def calculate_trianble_vertices(xA, yA, xB, yB, r):
+    """
+    anchorの相対位置とinteractionのstart,end両端の座標からanchorの接続するノードの座標を算出する
+    Calculate the coordinates of point C, which is the midpoint of AB and AM:BM = r:1.
+    Args:
+        xA (_type_): _description_
+        yA (_type_): _description_
+        xB (_type_): _description_
+        yB (_type_): _description_
+        r (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    # Calculate ABベクトル
+    AB_x = xB - xA
+    AB_y = yB - yA
+    # Calculate AMベクトル
+    AM_x = r * AB_x
+    AM_y = r * AB_y
+    # Calculate CMベクトル
+    CM_x = -AB_y
+    CM_y = AB_x
+    # Calculate 点Mの座標
+    M_x = xA + AM_x
+    M_y = yA + AM_y
+    # Calculate 点Cの座標
+    C_x = M_x + CM_x
+    C_y = M_y + CM_y
+
+    # Return 頂点A, B, Cの座標
+    return (xA, yA), (xB, yB), (C_x, C_y)
+
 
 
 def main():
@@ -76,3 +103,23 @@ def main():
     G = nx.Graph()
     G.add_nodes_from([n["name"] for n in pathway["nodes"]])
     G.add_edges_from([(e["source"], e["target"]) for e in pathway["interactions"]])
+    # 仮想エッジ、仮想ノードを追加
+
+    # pathway_attribute.main()に渡すdictを作成
+
+
+if __name__ == "__main__":
+    # anchorの相対日
+    # Given coordinates and ratio
+    xA = 0
+    yA = 0
+    xB = 4
+    yB = 0
+    ratio_AM_to_BM = 0.5  # Example ratio
+    # Calculate point C coordinates
+    A, B, C = calculate_trianble_vertices(xA, yA, xB, yB, ratio_AM_to_BM)
+
+    # Print the coordinates of point C
+    print("頂点A:", A)
+    print("頂点B:", B)
+    print("頂点C:", C)
