@@ -36,7 +36,6 @@ def node_positions(relative_postions) -> List[dict]:
     pathwayの内連結したノード（anchorの連結は含まない）の中心点の座標を算出し返す
     Args:
         relative_postions (_type_): _description_
-
     Returns:
         List[dict]: List[{"name": n["name"], "x": posx, "y": posy,  "layer":n["layer"],"indx": n["indx"]}]
     """
@@ -45,21 +44,46 @@ def node_positions(relative_postions) -> List[dict]:
         posx = (n["indx"] + 1) * stage_width / (n["total"] + 1) + stage_margin
         # y軸はlayerごとにinteraction_lengthが追加される
         posy = interaction_length * n["layer"] + stage_margin
-        positions.append({"name": n["name"], "x": posx, "y": posy,  "layer":n["layer"],"indx": n["indx"]})
+        positions.append({"ID": n["name"], "x": posx, "y": posy,  "layer":n["layer"],"indx": n["indx"]})
     return positions
 
 
-def anchored_node_positions(d:dict, relative_postions) -> List[dict]:
+def anchored_node_positions(pathway:dict, positions) -> List[dict]:
     """
     Todo:
     anchorに接続するノードのx,y座標を算出し返す.
     1. anchorの置かれるinteractionを取得
     2. interactionからanchorに接続するノードを取得
     3. interactionの両端のノードの座標を取得し、anchorに接続するノードの座標を算出する（ex.正三角形の位置。もしくはanchorのpositionを反映した位置）
-    ここまでの処理するとnode_position.pyのgraphvis_layout()と同等の情報がえられる
+    ここまでの処理するとnode_position.pyのgraphvis_layout()と同等の情報がえられる   
+    Args:
+        pathway(dict): テキストファイルから読み込んだpathway情報
+    Returns:
+        positions (dict): {node_id (str): Tuple[x(flot), y(float)]) }
     """
-    pass
-
+    # anchorの置かれるinteractionを取得（interactionのend_pointがpathway["anchors"]のIDと一致するものを抽出）
+    anchor_ids = [x["interaction"] for x in pathway["anchors"]]
+    #interaction_ids = [x["ID"] for x in pathway["interactions"]]
+    interaction_has_anchor = [x for x in pathway["interactions"] if x["ID"] in anchor_ids]
+    # interactionのstart_point, end_pointの座標を取得
+    anchor_nodes = []
+    for i in interaction_has_anchor:
+        # 上記のinteractionの持つanchorを取得
+        anchors = [x for x in pathway["anchors"] if x["interaction"] == i["ID"]]
+        # anchorをend_pointに持つinteractionとそのstart_point（anchorに接続するノード）を取得
+        for a in anchors:
+            # anchorの置かれたinteractionを取得
+            interaction = next(filter(lambda item:  item["ID"] == a["interaction"], interaction_has_anchor), None)
+            # interactionの両端の座標をpositionsから取得
+            start = next(filter(lambda item: item["ID"] == interaction["start_point"], positions), None)
+            end = next(filter(lambda item: item["ID"] == interaction["end_point"], positions), None)
+            # anchorに接続するノードのIDを取得
+            anchor_node_interaction = next(filter(lambda item: item["end_point"] == a["ID"], pathway["interactions"]), None)
+            node = anchor_node_interaction["start_point"]
+            # interactionの両端のノードの座標とanchorのposition(相対値)からanchorに接続するノードの座標を算出する
+            anchor_nodes_pos = calculate_trianble_vertices(start["x"], start["y"], end["x"], end["y"], float(a["position"]))
+            anchor_nodes.append({node: anchor_nodes_pos})
+    return anchor_nodes
 
 
 def calculate_trianble_vertices(xA, yA, xB, yB, r):
@@ -67,14 +91,14 @@ def calculate_trianble_vertices(xA, yA, xB, yB, r):
     anchorの相対位置とinteractionのstart,end両端の座標からanchorの接続するノードの座標を算出する
     Calculate the coordinates of point C, which is the midpoint of AB and AM:BM = r:1.
     Args:
-        xA (_type_): _description_
-        yA (_type_): _description_
-        xB (_type_): _description_
-        yB (_type_): _description_
-        r (_type_): _description_
+        xA (float): interactionの始点のx座標
+        yA (float): interactionの始点のy座標
+        xB (float): interactionの終点のx座標
+        yB (float): interactionの終点のy座標
+        r (float): interactionの始点からanchorまでの相対位置（0～1）
 
     Returns:
-        _type_: _description_
+        Tuple[float]: ノードの座標 (Cx, Cy)
     """
     # Calculate ABベクトル
     AB_x = xB - xA
@@ -91,35 +115,30 @@ def calculate_trianble_vertices(xA, yA, xB, yB, r):
     # Calculate 点Cの座標
     C_x = M_x + CM_x
     C_y = M_y + CM_y
-
     # Return 頂点A, B, Cの座標
-    return (xA, yA), (xB, yB), (C_x, C_y)
-
+    return C_x, C_y
 
 
 def main():
+    """
+    bfsを利用したレイアウトでの連結したノードおよびanchorに接続するノードの座標を算出する
+    Returns:
+        pos (dict): {node_id (str): Tuple[x(flot), y(float)]) }
+    """
     # pathwayの情報を{"pathway","nodes","interactions","anchors"}のdictで取得
-    pathway = rpf.main("data/hsa04010.txt")
+    pathway = rpf.main("../sample/simple_pathway.txt")
+    # 連結するノードのみで構成されるグラフを作成
     G = nx.Graph()
-    G.add_nodes_from([n["name"] for n in pathway["nodes"]])
-    G.add_edges_from([(e["source"], e["target"]) for e in pathway["interactions"]])
-    # 仮想エッジ、仮想ノードを追加
-
-    # pathway_attribute.main()に渡すdictを作成
+    G.add_nodes_from([n["ID"] for n in pathway["nodes"]])
+    G.add_edges_from([(e["start_point"], e["end_point"]) for e in pathway["interactions"]])
+    # ノードの座標をbfsの情報から算出
+    nodes = [n["ID"] for n in pathway["nodes"]]
+    pos = node_positions(layer_index(G, nodes, nodes[0]))
+    # anchorと連結するノードの座標anchorの配置されたinteractionを利用して算出
+    apos = anchored_node_positions(pathway, pos)
+    lpos = [{p["ID"]: (p["x"],p["y"])} for p in pos]
+    return lpos+apos
 
 
 if __name__ == "__main__":
-    # anchorの相対日
-    # Given coordinates and ratio
-    xA = 0
-    yA = 0
-    xB = 4
-    yB = 0
-    ratio_AM_to_BM = 0.5  # Example ratio
-    # Calculate point C coordinates
-    A, B, C = calculate_trianble_vertices(xA, yA, xB, yB, ratio_AM_to_BM)
-
-    # Print the coordinates of point C
-    print("頂点A:", A)
-    print("頂点B:", B)
-    print("頂点C:", C)
+    main()

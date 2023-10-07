@@ -68,8 +68,8 @@ def main(d:dict) -> dict:
     Args:
         d: {nodes:[], edges:[], anchors:[]}
     Returns: 
-        dict: x,y positions of nodes ex. {'n001': (103.6, 162.0), 'n002': (178.6, 162.0), 'n003': (28.597, 162.0),
-          'ai001': (44.597, 90.0), 'noo2': (73.597, 18.0)}
+        positions (dict): {node_id (str): Tuple[x(flot), y(float)]) }
+        ex. {'n001': (103.6, 162.0), 'n002': (178.6, 162.0), 'n003': (28.597, 162.0),'noo2': (73.597, 18.0)}
     """
     prg_option = d["pathway"].get("layout")
     if prg_option is None:
@@ -83,7 +83,6 @@ def main(d:dict) -> dict:
     G = create_graph(psudo_graph)
     # get x,y positions of nodes
     # 階層的レイアウト(dot)がPatywayのイメージに最もマッチするとおもわれる。その他circo,fdpなども良いかもしれない
-    # root=0の有無はレイアウトに鋭意強しない
     #pos = graphviz_layout(G, prog='dot', root=0)
     pos = graphviz_layout(G, prog=prg, root=0)
 
