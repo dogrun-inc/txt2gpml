@@ -48,6 +48,7 @@ You can specify the layout of graphviz, such as dot or circo. The default progra
 
 The interactions describes the start node and target node, each with a node ID.
 interactions block. The interactions also describe the relationship between anchors and nodes.
+Currently, when an interaction combines an anchor and a node, be sure to specify the anchor at the "end_point".
 
 ### anchors
 - interaction
