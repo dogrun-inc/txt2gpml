@@ -2,20 +2,27 @@
 import read_pathway_from_text as rpf
 import node_position as nop
 import interaction_position as ip
+import bfs_positions as bfsp
 
 def main(file:str):
-    # テキストデータを読み込む
-    # Todo: カラム名にstrip()をかける
     source_dict = rpf.main(file)
+    
     # has_anchorフラグを追加
     for idx, inter in enumerate(source_dict['interactions']):
         anchors = [a['ID'] for a in source_dict['anchors']]
         source_dict['interactions'][idx]['has_anchor'] =\
             (inter['start_point'] in anchors) or (inter['end_point'] in anchors)
+    
     # 擬似グラフを作成し、レイアウトしたノードの座標を取得する
-    node_position = nop.main(source_dict)
+    # if use bfs layout comment out this line
+    # node_position = nop.main(source_dict)
+    
+    # bfsを利用する場合
+    node_position = bfsp.main(file)
+    print(node_position)
     # interactionのstart_point, end_pointの座標とRelXYを生成する
     interaction_position = ip.main(source_dict, node_position)
+    print(interaction_position)
 
     max_x = max(p[0] for p in node_position.values())
     max_y = max(p[1] for p in node_position.values())

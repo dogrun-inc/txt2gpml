@@ -8,7 +8,7 @@ import read_pathway_from_text as rpf
 stage_width = 500
 stage_height = 500
 stage_margin = 30
-interaction_length = 50
+interaction_length = 150
 
 def layer_index(g, nodes, root_node) -> dict:
     """
@@ -66,7 +66,7 @@ def anchored_node_positions(pathway:dict, positions) -> List[dict]:
     #interaction_ids = [x["ID"] for x in pathway["interactions"]]
     interaction_has_anchor = [x for x in pathway["interactions"] if x["ID"] in anchor_ids]
     # interactionのstart_point, end_pointの座標を取得
-    anchor_nodes = []
+    anchor_nodes = {}
     for i in interaction_has_anchor:
         # 上記のinteractionの持つanchorを取得
         anchors = [x for x in pathway["anchors"] if x["interaction"] == i["ID"]]
@@ -82,7 +82,7 @@ def anchored_node_positions(pathway:dict, positions) -> List[dict]:
             node = anchor_node_interaction["start_point"]
             # interactionの両端のノードの座標とanchorのposition(相対値)からanchorに接続するノードの座標を算出する
             anchor_nodes_pos = calculate_trianble_vertices(start["x"], start["y"], end["x"], end["y"], float(a["position"]))
-            anchor_nodes.append({node: anchor_nodes_pos})
+            anchor_nodes.update({node: anchor_nodes_pos})
     return anchor_nodes
 
 
@@ -119,14 +119,14 @@ def calculate_trianble_vertices(xA, yA, xB, yB, r):
     return C_x, C_y
 
 
-def main():
+def main(f:str):
     """
     bfsを利用したレイアウトでの連結したノードおよびanchorに接続するノードの座標を算出する
     Returns:
         pos (dict): {node_id (str): Tuple[x(flot), y(float)]) }
     """
     # pathwayの情報を{"pathway","nodes","interactions","anchors"}のdictで取得
-    pathway = rpf.main("../sample/simple_pathway.txt")
+    pathway = rpf.main(f)
     # 連結するノードのみで構成されるグラフを作成
     G = nx.Graph()
     G.add_nodes_from([n["ID"] for n in pathway["nodes"]])
@@ -136,9 +136,10 @@ def main():
     pos = node_positions(layer_index(G, nodes, nodes[0]))
     # anchorと連結するノードの座標anchorの配置されたinteractionを利用して算出
     apos = anchored_node_positions(pathway, pos)
-    lpos = [{p["ID"]: (p["x"],p["y"])} for p in pos]
-    return lpos+apos
+    lpos = {p["ID"]: (p["x"],p["y"]) for p in pos}
+    # Todo: Listではなくdictにする
+    return {**lpos, **apos}
 
 
 if __name__ == "__main__":
-    main()
+    print(main("../sample/simple_pathway.txt"))
