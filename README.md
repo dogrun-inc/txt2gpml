@@ -33,7 +33,7 @@ interaction,position,ID
 - organism
 - layout(optional)
 
-You can specify the layout of graphviz, such as dot or circo. The default program is circo.
+You can specify the layout of graphviz, such as dot or circo. Default value is circo.
 
 ### nodes
 - Label
@@ -46,16 +46,16 @@ You can specify the layout of graphviz, such as dot or circo. The default progra
 - BiologicalType
 - ID
 
-The interactions describes the start node and target node, each with a node ID.
-interactions block. The interactions also describe the relationship between anchors and nodes.
+Interactions describe the start node and target node, each with a node ID.
+Interactions also describe the relationship between anchors and nodes.
 Currently, when an interaction combines an anchor and a node, be sure to specify the anchor at the "end_point".
 
 ### anchors
 - interaction
-- positin
+- position
 - ID
 
-Anchors describes the interaction in which the anchor is placed, its relative position in the interaction, and the ID of the anchor.
+Anchors describe the interaction in which the anchor is placed, its relative position in the interaction, and the ID of the anchor.
 
 ## Way to use
 
@@ -66,10 +66,10 @@ $ python txt2gpm.py -i input_file -o output_file_name.gpml
 ## To be implemented...
 
 - Layout optimization
-- Option to allow select ayout program option (dot,crco etc) 
+- Option to allow select layout program option (dot, circo and so on) 
 - GroupRef attribute
 - Color attribute
-- LineStyle attirbute
+- LineStyle attribute
 - DB binding
 - Group 
 
