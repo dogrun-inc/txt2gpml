@@ -46,7 +46,9 @@ def dict2etree(pathway):
         data_graphics.set('ZOrder', '32768')
         data_graphics.set('FontSize', '12')
         data_graphics.set('Valign', 'Middle')
-        # data_graphics.set('Color', '0000ff')
+        # Todo: update. LineStyle と同様な実装がベターと考える
+        if 'Color' in node.keys():
+            data_graphics.set('Color', node['Color'])
 
         data_xref = ET.SubElement(data_node, 'Xref')
         data_xref.set('Database', '')
@@ -59,6 +61,8 @@ def dict2etree(pathway):
         int_graphics = ET.SubElement(int_root, 'Graphics')
         int_graphics.set('ZOrder', '12288')
         int_graphics.set('LineThickness', '1.0')
+        if interaction.get('LineStyle', None):
+            int_graphics.set('LineStyle', interaction['LineStyle'])
 
         for index, point in enumerate(interaction['Points']):
             int_point = ET.SubElement(int_graphics, 'Point')

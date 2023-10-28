@@ -31,24 +31,31 @@ interaction,position,ID
 ### pathway
 - name
 - organism
-- layout(optional)
+- layout (optional)
 
-You can specify the layout of graphviz, such as dot or circo. Default value is circo.
+In txt2gpml, Breadth-first search (BFS) layout is applied by default, so there is no need to specify the algorithm.
+ If you want to use networkx layouts, you can specify circo, dot, etc. as the value of layout attribute.
 
 ### nodes
 - Label
 - BiologicalType
+- Color (optional)
 - ID
+
+Nodes are drawn black by default, but you can also specify the Color attribute as a hexadecimal color code, such as 0000ff
 
 ### interactions
 - start_point
 - end_point
 - BiologicalType
+- LineStyle (optional)
 - ID
 
 Interactions describe the start node and target node, each with a node ID.
 Interactions also describe the relationship between anchors and nodes.
 Currently, when an interaction combines an anchor and a node, be sure to specify the anchor at the "end_point".
+
+The line style of the interaction is solid by default, but the LindStyle attribute can be set separately, for example, "Broken".
 
 ### anchors
 - interaction
@@ -66,12 +73,8 @@ $ python txt2gpm.py -i input_file -o output_file_name.gpml
 ## To be implemented...
 
 - Layout optimization
-- Option to allow select layout program option (dot, circo and so on) 
-- GroupRef attribute
-- Color attribute
-- LineStyle attribute
+- Group objects
 - DB binding
-- Group 
 
 
 

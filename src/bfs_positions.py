@@ -4,11 +4,11 @@ from typing import Tuple, List
 import read_pathway_from_text as rpf
 
 
-# レイアウトの初期値設定
-stage_width = 500
-stage_height = 500
-stage_margin = 30
-interaction_length = 150
+# Todo:stage_width, stage_heightはレイアウト情報から算出する
+min_stage_width = 400
+min_stage_height = 400
+stage_margin = 80
+interaction_length = 200
 
 def layer_index(g, nodes, root_node) -> dict:
     """
@@ -16,7 +16,7 @@ def layer_index(g, nodes, root_node) -> dict:
     （layerの番号、layer中のインデックス）をBFSで算出し返す
     
     Returns:
-        dict:{name(str), layer(int), indx(int)}
+        List[dict]:[{name(str), layer(int), indx(int)},,]
     """
     layers = dict(enumerate(nx.bfs_layers(g, [root_node])))
     relative_position = []
@@ -28,17 +28,22 @@ def layer_index(g, nodes, root_node) -> dict:
             i = layer[1].index(node)
             total = len(layer[1])
             relative_position.append({"name": node, "layer":layer[0], "indx": i, "total": total}) # node, layer, layer内のnodeのindex
-    return relative_position
+
+    max_index_size = max(relative_position, key=lambda x: x["indx"]).get("indx")
+    # max_layer_size = max(relative_position, key=lambda x: x["layer"]).get("layer")
+    return relative_position, max_index_size
 
 
-def node_positions(relative_postions) -> List[dict]:
+def node_positions(relative_postions, max_index) -> List[dict]:
     """_summary_
     pathwayの内連結したノード（anchorの連結は含まない）の中心点の座標を算出し返す
     Args:
-        relative_postions (_type_): _description_
+        relative_postions (_type_): layer_index()で算出した各ノードのlayerとlayer内のindex情報
     Returns:
         List[dict]: List[{"name": n["name"], "x": posx, "y": posy,  "layer":n["layer"],"indx": n["indx"]}]
     """
+    stage_width = min_stage_width + max_index * 150
+    #stage_height = min_stage_height + max_layer * 150
     positions = []
     for n in relative_postions:
         posx = (n["indx"] + 1) * stage_width / (n["total"] + 1) + stage_margin
@@ -133,7 +138,7 @@ def main(f:str):
     G.add_edges_from([(e["start_point"], e["end_point"]) for e in pathway["interactions"]])
     # ノードの座標をbfsの情報から算出
     nodes = [n["ID"] for n in pathway["nodes"]]
-    pos = node_positions(layer_index(G, nodes, nodes[0]))
+    pos = node_positions(*layer_index(G, nodes, nodes[0]))
     # anchorと連結するノードの座標anchorの配置されたinteractionを利用して算出
     apos = anchored_node_positions(pathway, pos)
     lpos = {p["ID"]: (p["x"],p["y"]) for p in pos}
