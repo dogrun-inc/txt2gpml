@@ -67,7 +67,7 @@ Anchors describe the interaction in which the anchor is placed, its relative pos
 ## Way to use
 
 ```
-$ python txt2gpm.py -i input_file -o output_file_name.gpml
+$ python txt2gpml.py -i input_file -o output_file_name.gpml
 ```
 
 ## To be implemented...

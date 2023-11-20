@@ -1,4 +1,5 @@
 import networkx as nx
+import math
 from typing import Tuple, List
 
 import read_pathway_from_text as rpf
@@ -7,7 +8,7 @@ import read_pathway_from_text as rpf
 # Todo:stage_width, stage_heightはレイアウト情報から算出する
 min_stage_width = 400
 min_stage_height = 400
-stage_margin = 80
+stage_margin = 150
 interaction_length = 200
 
 def layer_index(g, nodes, root_node) -> dict:
@@ -91,7 +92,7 @@ def anchored_node_positions(pathway:dict, positions) -> List[dict]:
     return anchor_nodes
 
 
-def calculate_trianble_vertices(xA, yA, xB, yB, r):
+def calculate_trianble_vertices(xA, yA, xB, yB, r, angle_C= math.radians(45)):
     """
     anchorの相対位置とinteractionのstart,end両端の座標からanchorの接続するノードの座標を算出する
     Calculate the coordinates of point C, which is the midpoint of AB and AM:BM = r:1.
@@ -111,9 +112,11 @@ def calculate_trianble_vertices(xA, yA, xB, yB, r):
     # Calculate AMベクトル
     AM_x = r * AB_x
     AM_y = r * AB_y
-    # Calculate CMベクトル
-    CM_x = -AB_y
-    CM_y = AB_x
+
+    # Calculate CMベクトル, 11/10 CMの長さを調整
+    CM_x = -AB_y * 0.75
+    CM_y = AB_x * 0.75
+
     # Calculate 点Mの座標
     M_x = xA + AM_x
     M_y = yA + AM_y
