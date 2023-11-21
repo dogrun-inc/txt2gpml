@@ -82,4 +82,4 @@ def main(f:str):
 
 
 if __name__ == '__main__':
-    main("sample/simple_metabolite_text.txt")
+    main("")

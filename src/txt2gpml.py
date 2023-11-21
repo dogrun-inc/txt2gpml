@@ -50,9 +50,10 @@ def dict2etree(pathway):
         if 'Color' in node.keys():
             data_graphics.set('Color', node['Color'])
 
+
         data_xref = ET.SubElement(data_node, 'Xref')
-        data_xref.set('Database', '')
-        data_xref.set('ID', '')
+        data_xref.set('Database', node.get('xref_db',''))
+        data_xref.set('ID', node.get('xref_id',''))
 
     for interaction in pathway['Interactions']:
         int_root = ET.SubElement(root, 'Interaction')

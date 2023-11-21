@@ -23,19 +23,19 @@ def create_psudo_network(d:dict) -> dict:
     ps_edges = []
     for a in d["anchors"]:
         # anchorを仮想ノードとしてps_nodesに追加
-        ps_node_id = a["ID"]
-        ps_nodes.append({"ID": ps_node_id})
+        ps_node_id = a["grahid"]
+        ps_nodes.append({"grahid": ps_node_id})
 
         # 仮想エッジを追加
         # a. anchorを抽出し、anchorが乗るinteractionを取得
-        ps_interaction = next((item for item in d["interactions"] if item['ID'] == a["interaction"]), None)
+        ps_interaction = next((item for item in d["interactions"] if item['grahid'] == a["interaction"]), None)
         # b. anchorが乗るinteractionのstart_point, end_pointのノードを取得
         ps_start_point = ps_interaction["start_point"] 
         ps_end_point = ps_interaction["end_point"]
         # c. anchorとinteractionのstart_point, end_pointのノードとanchorを結ぶ仮想エッジを生成し、ps_edges:listに追加する
         # interactionの両端ノードとanchorを結ぶ二つの仮想エッジを生成する
-        ps_edges.extend([{"start_point": ps_start_point, "end_point": ps_node_id, "ID": ps_node_id},
-                          {"start_point": ps_node_id, "end_point": ps_end_point, "ID": ps_node_id}])
+        ps_edges.extend([{"start_point": ps_start_point, "end_point": ps_node_id, "grahid": ps_node_id},
+                          {"start_point": ps_node_id, "end_point": ps_end_point, "grahid": ps_node_id}])
 
     d["nodes"].extend(ps_nodes)
     d["interactions"].extend(ps_edges)
@@ -47,7 +47,7 @@ def create_graph(d:dict) -> dict:
     create graph from pathway data
     """
     G = nx.Graph()
-    node_list = [n["ID"] for n in d["nodes"]]
+    node_list = [n["grahid"] for n in d["nodes"]]
     G.add_nodes_from(node_list)
     ###
     # Todo: interactionsの要素がリストとしてeが取得されるケースがある

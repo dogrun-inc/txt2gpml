@@ -9,7 +9,7 @@ import read_pathway_from_text as rpf
 min_stage_width = 400
 min_stage_height = 400
 stage_margin = 150
-interaction_length = 200
+interaction_length = 180
 
 def layer_index(g, nodes, root_node) -> dict:
     """
@@ -50,7 +50,7 @@ def node_positions(relative_postions, max_index) -> List[dict]:
         posx = (n["indx"] + 1) * stage_width / (n["total"] + 1) + stage_margin
         # y軸はlayerごとにinteraction_lengthが追加される
         posy = interaction_length * n["layer"] + stage_margin
-        positions.append({"ID": n["name"], "x": posx, "y": posy,  "layer":n["layer"],"indx": n["indx"]})
+        positions.append({"GraphId": n["name"], "x": posx, "y": posy,  "layer":n["layer"],"indx": n["indx"]})
     return positions
 
 
@@ -70,21 +70,21 @@ def anchored_node_positions(pathway:dict, positions) -> List[dict]:
     # anchorの置かれるinteractionを取得（interactionのend_pointがpathway["anchors"]のIDと一致するものを抽出）
     anchor_ids = [x["interaction"] for x in pathway["anchors"]]
     #interaction_ids = [x["ID"] for x in pathway["interactions"]]
-    interaction_has_anchor = [x for x in pathway["interactions"] if x["ID"] in anchor_ids]
+    interaction_has_anchor = [x for x in pathway["interactions"] if x["GraphId"] in anchor_ids]
     # interactionのstart_point, end_pointの座標を取得
     anchor_nodes = {}
     for i in interaction_has_anchor:
         # 上記のinteractionの持つanchorを取得
-        anchors = [x for x in pathway["anchors"] if x["interaction"] == i["ID"]]
+        anchors = [x for x in pathway["anchors"] if x["interaction"] == i["GraphId"]]
         # anchorをend_pointに持つinteractionとそのstart_point（anchorに接続するノード）を取得
         for a in anchors:
             # anchorの置かれたinteractionを取得
-            interaction = next(filter(lambda item:  item["ID"] == a["interaction"], interaction_has_anchor), None)
+            interaction = next(filter(lambda item:  item["GraphId"] == a["interaction"], interaction_has_anchor), None)
             # interactionの両端の座標をpositionsから取得
-            start = next(filter(lambda item: item["ID"] == interaction["start_point"], positions), None)
-            end = next(filter(lambda item: item["ID"] == interaction["end_point"], positions), None)
+            start = next(filter(lambda item: item["GraphId"] == interaction["start_point"], positions), None)
+            end = next(filter(lambda item: item["GraphId"] == interaction["end_point"], positions), None)
             # anchorに接続するノードのIDを取得
-            anchor_node_interaction = next(filter(lambda item: item["end_point"] == a["ID"], pathway["interactions"]), None)
+            anchor_node_interaction = next(filter(lambda item: item["end_point"] == a["GraphId"], pathway["interactions"]), None)
             node = anchor_node_interaction["start_point"]
             # interactionの両端のノードの座標とanchorのposition(相対値)からanchorに接続するノードの座標を算出する
             anchor_nodes_pos = calculate_trianble_vertices(start["x"], start["y"], end["x"], end["y"], float(a["position"]))
@@ -137,17 +137,17 @@ def main(f:str):
     pathway = rpf.main(f)
     # 連結するノードのみで構成されるグラフを作成
     G = nx.Graph()
-    G.add_nodes_from([n["ID"] for n in pathway["nodes"]])
+    G.add_nodes_from([n["GraphId"] for n in pathway["nodes"]])
     G.add_edges_from([(e["start_point"], e["end_point"]) for e in pathway["interactions"]])
     # ノードの座標をbfsの情報から算出
-    nodes = [n["ID"] for n in pathway["nodes"]]
+    nodes = [n["GraphId"] for n in pathway["nodes"]]
     pos = node_positions(*layer_index(G, nodes, nodes[0]))
     # anchorと連結するノードの座標anchorの配置されたinteractionを利用して算出
     apos = anchored_node_positions(pathway, pos)
-    lpos = {p["ID"]: (p["x"],p["y"]) for p in pos}
+    lpos = {p["GraphId"]: (p["x"],p["y"]) for p in pos}
     # Todo: Listではなくdictにする
     return {**lpos, **apos}
 
 
 if __name__ == "__main__":
-    print(main("../sample/simple_pathway.txt"))
+    print(main(""))
