@@ -19,13 +19,13 @@ Tools to generate readable XML (GPML) for [WikiPathways (https://www.wikipathway
 name,organism
 
 # nodes
-Label, BiologicalType,ID
+Label,BiologicalType,GraphId
 
 # interactions
 start_point,end_point,BiologicalType
 
 # anchors
-interaction,position,ID
+interaction,position,GraphId
 ```
 
 ### pathway
@@ -39,8 +39,11 @@ In txt2gpml, Breadth-first search (BFS) layout is applied by default, so there i
 ### nodes
 - Label
 - BiologicalType
+- GraphId
 - Color (optional)
-- ID
+- xref_db (optional)
+- xref_id (optional)
+
 
 Nodes are drawn black by default, but you can also specify the Color attribute as a hexadecimal color code, such as 0000ff
 
@@ -48,8 +51,9 @@ Nodes are drawn black by default, but you can also specify the Color attribute a
 - start_point
 - end_point
 - BiologicalType
+- GraphId
 - LineStyle (optional)
-- ID
+
 
 Interactions describe the start node and target node, each with a node ID.
 Interactions also describe the relationship between anchors and nodes.
@@ -60,7 +64,7 @@ The line style of the interaction is solid by default, but the LindStyle attribu
 ### anchors
 - interaction
 - position
-- ID
+- GraphId
 
 Anchors describe the interaction in which the anchor is placed, its relative position in the interaction, and the ID of the anchor.
 
@@ -75,9 +79,6 @@ $ python txt2gpml.py -i input_file -o output_file_name.gpml
 - Layout optimization
 - Group objects
 - DB binding
-
-
-
 
 
 
