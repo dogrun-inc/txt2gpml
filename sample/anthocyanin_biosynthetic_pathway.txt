@@ -3,7 +3,7 @@ name,organism,layout
 Representative anthocyanin biosynthetic pathway,Arabidopsis thaliana,dot
 
 # nodes
-Label,BiologicalType,ID
+Label,BiologicalType,GraphId
 DL-Phenylalanine,Metabolite,n0001
 Cinnamic acid,Metabolite,n0002
 P-coumaric acid,Metabolite,n0003
@@ -24,7 +24,7 @@ DFR,Protein,b0007
 DFR,Protein,b0008
 
 # interactions
-start_point,end_point,BiologicalType,ID
+start_point,end_point,BiologicalType,GraphId
 n0001,n0002,Arrow,i0001
 n0002,n0003,Arrow,i0002
 n0003,n0004,Arrow,i0003
@@ -44,7 +44,7 @@ b0007,a0007,mim-catalysis,i0016
 b0008,a0008,mim-catalysis,i0017
 
 # anchors
-interaction,position,ID
+interaction,position,GraphId
 i0001,0.5,a0001
 i0002,0.5,a0002
 i0003,0.5,a0003

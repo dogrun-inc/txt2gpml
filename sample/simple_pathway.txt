@@ -3,17 +3,17 @@ name,organism
 simple pathway,Canis familiaris
 
 # nodes
-Label,BiologicalType,ID,Color
+Label,BiologicalType,GraphId,Color,Xref_id
 Metabolite1,Metabolite,n0001,0000ff
 Metabolite2,Metabolite,n0002,0000ff
 Metabolite3,Metabolite,n0003,0000ff
 Metabolite4,Metabolite,n0004,0000ff
-GeneProduct1,GeneProduct,n0005
-GeneProduct2,GeneProduct,n0006
-GeneProduct2,GeneProduct,n0007
+GeneProduct1,GeneProduct,n0005,,1
+GeneProduct2,GeneProduct,n0006,,2
+GeneProduct2,GeneProduct,n0007,,3
 
 # interactions
-start_point,end_point,BiologicalType,ID,LineStyle
+start_point,end_point,BiologicalType,GraphId,LineStyle
 n0001,n0002,Arrow,i0001,Broken
 n0002,n0003,Arrow,i0002
 n0003,n0004,Arrow,i0003
@@ -22,7 +22,7 @@ n0006,a0002,mim-catalysis,i0005
 n0007,a0003,mim-catalysis,i0006
 
 # anchors
-interaction,position,ID
+interaction,position,GraphId
 i0001,0.5,a0001
 i0002,0.5,a0002
 i0003,0.5,a0003

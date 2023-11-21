@@ -41,8 +41,8 @@ In txt2gpml, Breadth-first search (BFS) layout is applied by default, so there i
 - BiologicalType
 - GraphId
 - Color (optional)
-- xref_db (optional)
-- xref_id (optional)
+- Xref_db (optional)
+- Xref_id (optional)
 
 
 Nodes are drawn black by default, but you can also specify the Color attribute as a hexadecimal color code, such as 0000ff

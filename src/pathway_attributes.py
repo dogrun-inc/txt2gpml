@@ -32,10 +32,8 @@ def main(file:str):
                    'BoardHeight': str(max_y + 100),
                 },
                 'Nodes': [
-                    # Todo: xref_id, xred_db="qpx"をオプションで追加する
-                    # ３項演算子でリスト内包表記を使っているが...
                     {'TextLabel': n['Label'], 'GraphId': n['GraphId'], 'BiologicalType': n['BiologicalType'], 'Color': n.get('Color', None),
-                    'CenterX': str(node_position[n['GraphId']][0]), 'CenterY': str(node_position[n['GraphId']][1]), 'xref_id': n.get('xref_id'), 'xref_db': n.get('xref_db')}
+                    'CenterX': str(node_position[n['GraphId']][0]), 'CenterY': str(node_position[n['GraphId']][1]), 'xref_id': n.get('Xref_id'), 'xref_db': n.get('Xref_db')}
                     for n in source_dict['nodes'] 
                 ],
                 'Interactions': [
